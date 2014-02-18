@@ -3,6 +3,32 @@ roundup
 
 Rounding up the team's links for a regular blog post
 
+## Install
+
+### MySQL
+
+Create a new user and a new database:
+
+	mysql -u root -psomepasshere
+	mysql> create database roundup character set utf8; grant all on roundup.* to roundup@'localhost' identified by 'roundup';
+
+### WordPress Developer credentials
+
+If you don't already have a wordpress.com account, sign up for a one at http://wordpress.com/
+
+Use that account to create a new application at https://developer.wordpress.com/apps/new/
+
+The 'Website URL' is http://yourdomain.com/roundup and the 'Redirect URL' is http://yourdomain/roundup/api/token
+
+Once you have created an application, visit https://developer.wordpress.com/apps/ to get the 'Client ID' and 'Client Secret'
+
+### Settings
+
+Perma settings are held in the settings module file. Copy the example and fill in as you see fit.  Use the 'Client ID' and 'Client Secret' previously acquired as 'WP_CLIENT_ID' and 'WP_CLIENT_SECRET'
+
+    cd etc; cp ./config.sample.ini ./config.sample.ini
+
+
 ## License
 
 Dual licensed under the MIT license (below) and [GPL license](http://www.gnu.org/licenses/gpl-3.0.html).
