@@ -22,9 +22,21 @@ The 'Website URL' is http://yourdomain.com/roundup and the 'Redirect URL' is htt
 
 Once you have created an application, visit https://developer.wordpress.com/apps/ to get the 'Client ID' and 'Client Secret'
 
+### Get blog ID and access token
+
+Use the previous info and visit the following.
+
+http://yourdomain.com/roundup/api/token?WP_REDIRECT=YOUR_WP_REDIRECT&WP_CLIENT_SECRET=YOUR_WP_CLIENT_SECRET&WP_CLIENT_ID=YOUR_WP_CLIENT_ID
+
+This will display your access key and blog ID
+
 ### Settings
 
-Perma settings are held in the settings module file. Copy the example and fill in as you see fit.  Use the 'Client ID' and 'Client Secret' previously acquired as 'WP_CLIENT_ID' and 'WP_CLIENT_SECRET'
+Perma settings are held in the settings module file. Copy the example and fill in as you see fit.  
+
+Use the 'Client ID' and 'Client Secret' previously acquired as 'WP_CLIENT_ID' and 'WP_CLIENT_SECRET'
+
+Use the 'access key' and 'blog ID' as 'WP_TOKEN' and 'WP_BLOG'
 
     cd etc; cp ./config.sample.ini ./config.sample.ini
 
