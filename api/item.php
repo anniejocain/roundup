@@ -43,6 +43,9 @@ class Item extends Controller {
       $title = addslashes($_REQUEST['title']);
       $description = addslashes($_REQUEST['description']);
       $creator = $_REQUEST['creator'];
+
+      // Used in our screencap retrieval
+      $image_name .= uniqid() . ".png";
       
       $db = $f3->get('DB');
       $db_user = $f3->get('DB_USER');
@@ -56,7 +59,7 @@ class Item extends Controller {
       mysql_select_db($db)
       or die ("Could not connect to database");   
       
-      $query = "INSERT INTO `roundup` (`link`, `description`, `creator`, `title`) VALUES ('$link', '$description', '$creator', '$title')";
+      $query = "INSERT INTO `roundup` (`link`, `description`, `creator`, `title`, `image_name`) VALUES ('$link', '$description', '$creator', '$title', '$image_name')";
       $result = mysql_query($query);
 
       $query = "SELECT * FROM `roundup` WHERE `posted` = 0 ORDER BY added DESC";
@@ -91,6 +94,29 @@ class Item extends Controller {
       //echo "<p>Tweeting $message</p>";
         
       //$connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
+
+
+        ////////////
+        // Get the image
+        ////////////
+
+
+	error_log($link, 0);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://perma.cc/monitor/archive?url=" . $link);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $deserialized= json_decode($output, true);
+
+        $url_to_image = $deserialized['url_to_image'];
+        sleep(30);
+        file_put_contents($f3->get('SCREEN_CAP_ROOT') . $image_name,  fopen("http://perma.cc" . $url_to_image, 'r'));
+        ////////////
+        // Done getting the image
+        ////////////
+
+      
     }
     
     function token() {
