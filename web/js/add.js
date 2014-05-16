@@ -1,4 +1,5 @@
 var item_url = web_base + "api/item";
+var blog_url = web_base + "api/blog";
 $(document).ready(function() {
   setMaxLength();
   $("textarea.checkMax").bind("click mouseover keyup change", function(){checkMaxLength(this.id); } )
@@ -14,11 +15,24 @@ $(document).ready(function() {
               $(this).val('');
         });
         $('#result').html('<h4>' + data.response + '</h4>');
+        if(data.tipped) {
+            $('#share-form').slideUp();
+            $('#blog-post').fadeIn();
+        }
         showHopper();
       });
       return false;	
     }
    });
+   
+   $("#blog-post").submit(function(event) {
+     var intro = $('#intro').val();
+     $.post(blog_url, {intro: intro}, function(data) {
+        $('#blog-post').fadeOut();
+        $('#result').html('<h4>' + data.response + '</h4>');
+      });
+      return false;	
+    });
 	
 	$('#bookmarklet-name').keyup(function() {
 	  var name = $(this).val();

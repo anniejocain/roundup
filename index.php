@@ -8,8 +8,8 @@ $f3->set('AUTOLOAD','api/; web/;');
 
 $f3->route('GET /api/item/recent', 'Item->recent');
 $f3->route('POST /api/item', 'Item->new_item');
+$f3->route('POST /api/blog', 'Item->blog');
 $f3->route('GET /api/token', 'Item->token');
-$f3->route('GET /api/blog', 'Item->blog');
 
 $f3->route('GET /', function($f3) {
   $f3->set('web_base', $f3->get('WEB_BASE'));

@@ -48,6 +48,7 @@ class Item extends Controller {
       $db_user = $f3->get('DB_USER');
       $db_password = $f3->get('DB_PASSWORD');
       $db_host = $f3->get('DB_HOST');
+      $blog_min = $f3->get("BLOG_MIN");
         
       mysql_connect($db_host, $db_user, $db_password)
       or die ("Could not connect to resource");
@@ -58,7 +59,24 @@ class Item extends Controller {
       $query = "INSERT INTO `roundup` (`link`, `description`, `creator`, `title`) VALUES ('$link', '$description', '$creator', '$title')";
       $result = mysql_query($query);
 
-      $this->blog();
+      $query = "SELECT * FROM `roundup` WHERE `posted` = 0 ORDER BY added DESC";
+      $result = mysql_query($query);
+      $num_rows = mysql_num_rows($result);
+      if($num_rows >= $blog_min) {
+    $json = array();
+        $json['tipped'] = true;
+        $json['response'] = "This one tipped the scales! You get to introduce this blog post.";
+        header('Content-type: application/json');
+        echo json_encode($json);
+        
+    }
+    else {
+        $json = array();
+        $json['tipped'] = false;
+        $json['response'] = "Got it, thanks.";
+        header('Content-type: application/json');
+        echo json_encode($json);
+      }
       
       mysql_close();
 
@@ -72,7 +90,7 @@ class Item extends Controller {
         
       //echo "<p>Tweeting $message</p>";
         
-      $connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
+      //$connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
     }
     
     function token() {
@@ -107,8 +125,9 @@ class Item extends Controller {
       $wp_token = $f3->get("WP_TOKEN");
       $wp_blog = $f3->get("WP_BLOG");
       $blog_min = $f3->get("BLOG_MIN");
+      $intro = addslashes($_REQUEST['intro']);
       
-      $link_list = '';
+      $link_list = "<div class='blog-roundup'><p>$intro</p>";
       
       mysql_connect($db_host, $db_user, $db_password)
       or die ("Could not connect to resource");
@@ -120,6 +139,7 @@ class Item extends Controller {
       $result = mysql_query($query);
       $num_rows = mysql_num_rows($result);
       if($num_rows >= $blog_min) {
+        $json = array();
         while ($row = mysql_fetch_array($result)) {
           $link_list .= '<p><a href="' . $row[1] . '">' . $row[2] . '</a>';
           if(strlen($row[4]) > 0)
@@ -127,12 +147,12 @@ class Item extends Controller {
           else  
             $link_list .= '</p>';
         }
-        
+        $link_list .= '</div>';
         $posted_query = "UPDATE `roundup` SET `posted` = '1' WHERE `posted` = 0";
         $posted_result = mysql_query($posted_query);
         $title = "Link roundup " . date("F j, Y"); 
-        
-        $options  = array (
+        $json['post'] = $link_list;
+        /*$options  = array (
         'http' => 
         array (
           'ignore_errors' => true,
@@ -159,9 +179,8 @@ class Item extends Controller {
           "https://public-api.wordpress.com/rest/v1/sites/$wp_blog/posts/new/",
           false,
           $context
-        );
-        $json = array();
-        $json['response'] = "This one tipped the scales!  Check out a new blog post.";
+        );*/
+        $json['response'] = "Nice work!  Check out a new blog post.";
         header('Content-type: application/json');
         echo json_encode($json);
       }
