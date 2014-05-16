@@ -12,6 +12,20 @@ Create a new user and a new database:
 	mysql -u root -psomepasshere
 	mysql> create database roundup character set utf8; grant all on roundup.* to roundup@'localhost' identified by 'roundup';
 
+You likely want your DB to have one table that looks like this:
+
+	CREATE TABLE `roundup` (
+	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	  `link` varchar(255) DEFAULT NULL,
+	  `title` varchar(255) DEFAULT NULL,
+	  `description` varchar(255) DEFAULT NULL,
+	  `creator` varchar(255) DEFAULT NULL,
+	  `added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+	  `posted` tinyint(1) DEFAULT '0',
+	  `image_name` varchar(255) DEFAULT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=MyISAM AUTO_INCREMENT=186 DEFAULT CHARSET=latin1;
+
 ### WordPress Developer credentials
 
 If you don't already have a wordpress.com account, sign up for a one at http://wordpress.com/
@@ -32,7 +46,7 @@ This will display your access key and blog ID
 
 ### Settings
 
-Perma settings are held in the settings module file. Copy the example and fill in as you see fit.  
+Roundup settings are held in the settings module file. Copy the example and fill in as you see fit.  
 
 Use the 'Client ID' and 'Client Secret' previously acquired as 'WP_CLIENT_ID' and 'WP_CLIENT_SECRET'
 
@@ -40,6 +54,11 @@ Use the 'access key' and 'blog ID' as 'WP_TOKEN' and 'WP_BLOG'
 
     cd etc; cp ./config.sample.ini ./config.sample.ini
 
+### PHP GD
+
+We use the PHP GD library to resize our screen captures. If you're on Redhat, you might install GD using a command like the following.
+
+    yum install php-gd
 
 ## License
 
