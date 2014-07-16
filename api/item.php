@@ -101,7 +101,7 @@ class Item extends Controller {
         ////////////
 	error_log($link, 0);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://hlslwebtest.law.harvard.edu/preview/create?thumb=400px*300px&url=" . $link);
+        curl_setopt($ch, CURLOPT_URL, $f3->get('PREVIEW_API_ROOT') . "preview/create?thumb=400px*300px&url=" . $link);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -110,7 +110,7 @@ class Item extends Controller {
         $image_url = $deserialized['thumb_url'];
         //sleep(30);
         $image_disk_path = $f3->get('SCREEN_CAP_ROOT') . $image_name;
-        file_put_contents($image_disk_path,  fopen("http://hlslwebtest.law.harvard.edu" . $image_url, 'r'));
+        file_put_contents($image_disk_path,  fopen($f3->get('PREVIEW_API_ROOT') . $image_url, 'r'));
         ////////////
         // Done getting the image
         ////////////
