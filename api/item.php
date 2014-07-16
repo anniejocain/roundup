@@ -101,49 +101,19 @@ class Item extends Controller {
         ////////////
 	error_log($link, 0);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://perma.cc/monitor/archive?url=" . $link);
+        curl_setopt($ch, CURLOPT_URL, "http://hlslwebtest.law.harvard.edu/preview/create?thumb=400px*300px&url=" . $link);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
         $deserialized= json_decode($output, true);
 
-        $url_to_image = $deserialized['url_to_image'];
-        sleep(30);
+        $image_url = $deserialized['thumb_url'];
+        //sleep(30);
         $image_disk_path = $f3->get('SCREEN_CAP_ROOT') . $image_name;
-        file_put_contents($image_disk_path,  fopen("http://perma.cc" . $url_to_image, 'r'));
+        file_put_contents($image_disk_path,  fopen("http://hlslwebtest.law.harvard.edu" . $image_url, 'r'));
         ////////////
         // Done getting the image
         ////////////
-
-
-        ////////////
-        // Resize the image
-        ////////////
-	$percent = 0.5;
-
-	// Get new dimensions
-	list($width, $height) = getimagesize($image_disk_path);
-	$new_width = $width * $percent;
-	$new_height = $height * $percent;
-
-	// Resample
-	$thumb = imagecreatetruecolor($new_width, $new_height);
-	$image = imagecreatefrompng($image_disk_path);
-	imagecopyresampled($thumb, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-
-
-	// Some captures are super long. Trim their height to 500px.
-	if ($new_height > 500) {
-    		$thumb_slice = imagecreatetruecolor($new_width, 500);
-    		imagecopy($thumb_slice, $thumb, 0, 0, 0, 0, $new_width, 500);
-	}
-
-	// Write it back out to disk
-	imagepng($thumb_slice, $image_disk_path, 8);
-        ////////////
-        // Done resizing the image
-        ////////////
-      
     }
     
     function token() {

@@ -18,7 +18,7 @@ $f3->route('GET /', function($f3) {
   $f3->set('name', $_REQUEST['name']);
   
   $view=new View;
-  echo $view->render('web/add.html');
+  echo $view->render('web/archive.html');
 });
 
 $f3->route('GET /add', function($f3) {
