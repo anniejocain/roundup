@@ -8,8 +8,10 @@ class Item extends Controller {
       $db_user = $f3->get('DB_USER');
       $db_password = $f3->get('DB_PASSWORD');
       $db_host = $f3->get('DB_HOST');
+      $blog_min = $f3->get("BLOG_MIN");
+      $items = $_REQUEST['items'];
       
-      $FIELDS     = array('link', 'title', 'description', 'creator');
+      $FIELDS     = array('link', 'title', 'description', 'creator', 'screenshot');
       $JSON = array();
       
       mysql_connect($db_host, $db_user, $db_password)
@@ -18,21 +20,28 @@ class Item extends Controller {
       mysql_select_db($db)
       or die ("Could not connect to database");
       
-      $query = "SELECT * FROM `roundup` WHERE `posted` = 0 ORDER BY added DESC";
+      $where_query = ' WHERE `posted` = 0';
+      if($items === 'all')
+        $where_query = '';
+      
+      $query = "SELECT * FROM `roundup`$where_query ORDER BY added DESC LIMIT 25";
       $result = mysql_query($query);
+      $num_rows = mysql_num_rows($result);
+      $response['tipped'] = false;
+      if(($num_rows + 1) >= $blog_min) 
+        $response['tipped'] = true;
       while ($row = mysql_fetch_array($result))
       {
-        $_datas   = array($row[1], $row[2], $row[3], $row[4]);
+        $_datas   = array($row[1], $row[2], $row[3], $row[4], $row[7]);
                   
         $_tmparr  = array_combine($FIELDS, $_datas);
         array_push($JSON, $_tmparr);
       }
-      
-      
+      $response['items'] = $JSON;
       
       $callback = $_GET['callback'];
       header('Content-type: application/json');
-      echo $callback . '(' . json_encode($JSON) . ')';
+      echo $callback . '(' . json_encode($response) . ')';
       
       mysql_close();
     }
@@ -43,6 +52,7 @@ class Item extends Controller {
       $title = addslashes($_REQUEST['title']);
       $description = addslashes($_REQUEST['description']);
       $creator = $_REQUEST['creator'];
+      $intro = $_REQUEST['intro'];
 
       // Used in our screencap retrieval
       $image_name .= uniqid() . ".png";
@@ -64,18 +74,15 @@ class Item extends Controller {
 
       $query = "SELECT * FROM `roundup` WHERE `posted` = 0 ORDER BY added DESC";
       $result = mysql_query($query);
-      $num_rows = mysql_num_rows($result);
-      if($num_rows >= $blog_min) {
-    $json = array();
-        $json['tipped'] = true;
-        $json['response'] = "This one tipped the scales! You get to introduce this blog post.";
+      if($intro !== '') {
+        $this->blog($intro);
+        /*$json = array();
+        $json['response'] = "Nice work!  Check out a new blog post";
         header('Content-type: application/json');
-        echo json_encode($json);
-        
+        echo json_encode($json);*/
     }
     else {
         $json = array();
-        $json['tipped'] = false;
         $json['response'] = "Got it, thanks.";
         header('Content-type: application/json');
         echo json_encode($json);
@@ -93,15 +100,11 @@ class Item extends Controller {
         
       //echo "<p>Tweeting $message</p>";
         
-      //$connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
-
-
-        ////////////
-        // Get the image
-        ////////////
-	error_log($link, 0);
+      $connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
+      
+      error_log($link, 0);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $f3->get('PREVIEW_API_ROOT') . "preview/create?thumb=400px*300px&url=" . $link);
+        curl_setopt($ch, CURLOPT_URL, $f3->get('PREVIEW_API_ROOT') . "preview/create?thumb=400px*300px&url=" . urlencode($link));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
         curl_close($ch);
@@ -111,9 +114,6 @@ class Item extends Controller {
         //sleep(30);
         $image_disk_path = $f3->get('SCREEN_CAP_ROOT') . $image_name;
         file_put_contents($image_disk_path,  fopen($f3->get('PREVIEW_API_ROOT') . $image_url, 'r'));
-        ////////////
-        // Done getting the image
-        ////////////
     }
     
     function token() {
@@ -139,7 +139,7 @@ class Item extends Controller {
       echo "<p>Access key acquired! :: $access_key</p><p>Blog ID is $blog_id</p>";
     }
     
-    function blog() {
+    function blog($intro) {
       $f3=$this->framework;
       $db = $f3->get('DB');
       $db_user = $f3->get('DB_USER');
@@ -148,7 +148,7 @@ class Item extends Controller {
       $wp_token = $f3->get("WP_TOKEN");
       $wp_blog = $f3->get("WP_BLOG");
       $blog_min = $f3->get("BLOG_MIN");
-      $intro = addslashes($_REQUEST['intro']);
+      //$intro = addslashes($_REQUEST['intro']);
       
       $link_list = "<div class='blog-roundup'><p>$intro</p>";
       
@@ -160,22 +160,18 @@ class Item extends Controller {
       
       $query = "SELECT * FROM `roundup` WHERE `posted` = 0 ORDER BY added DESC";
       $result = mysql_query($query);
-      $num_rows = mysql_num_rows($result);
-      if($num_rows >= $blog_min) {
         $json = array();
         while ($row = mysql_fetch_array($result)) {
-          $link_list .= '<p><a href="' . $row[1] . '">' . $row[2] . '</a>';
-          if(strlen($row[4]) > 0)
-            $link_list .= '<br>' . $row[3] . '<small> - ' . $row[4] . '</small></p>';
-          else  
-            $link_list .= '</p>';
+          $link_list .= '<div class="row"><div class="card span8"><p class="roundup-title"><a href="' . $row[1] . '">' . $row[2] . '</a></p>';
+          $link_list .= '<div class="screenshot span4"><div class="screenshot-frame"><a href="' . $row[1] . '"><img alt="" src="' . $f3->get('SCREEN_CAP_ROOT') . $row[7] . '" /></a></div></div>';
+          $link_list .= '<div class="span4 metadata"><div class="text-frame">' . $row[3] . '<p class="submitted-by">' . $row[4] . '</p></div></div></div></div>';
         }
         $link_list .= '</div>';
         $posted_query = "UPDATE `roundup` SET `posted` = '1' WHERE `posted` = 0";
         $posted_result = mysql_query($posted_query);
         $title = "Link roundup " . date("F j, Y"); 
         $json['post'] = $link_list;
-        /*$options  = array (
+        $options  = array (
         'http' => 
         array (
           'ignore_errors' => true,
@@ -202,17 +198,11 @@ class Item extends Controller {
           "https://public-api.wordpress.com/rest/v1/sites/$wp_blog/posts/new/",
           false,
           $context
-        );*/
-        $json['response'] = "Nice work!  Check out a new blog post.";
+        );
+        $json['response'] = "Nice work!  Check out a new blog post";
         header('Content-type: application/json');
         echo json_encode($json);
-      }
-      else {
-        $json = array();
-        $json['response'] = "Got it, thanks.";
-        header('Content-type: application/json');
-        echo json_encode($json);
-      }
+
     }
 
 }

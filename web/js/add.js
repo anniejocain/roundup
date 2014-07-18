@@ -1,5 +1,6 @@
 var item_url = web_base + "api/item";
 var blog_url = web_base + "api/blog";
+var tipped = false;
 $(document).ready(function() {
   setMaxLength();
   $("textarea.checkMax").bind("click mouseover keyup change", function(){checkMaxLength(this.id); } )
@@ -10,13 +11,16 @@ $(document).ready(function() {
       var url = $('#url').val();
       var creator = $('#creator').val();
       var description = $('#description').val();
-      $.post(item_url, {title: title, creator: creator, link: url, description: description}, function(data) {
+      var intro = '';
+      if(tipped)
+        intro = $('#intro').val();
+      $.post(item_url, {title: title, creator: creator, link: url, description: description, intro: intro}, function(data) {
+        $('#share-form').slideUp();
         $('#share-form input, #share-form textarea').each(function() {
               $(this).val('');
         });
         $('#result').html('<h4>' + data.response + '</h4>');
         if(data.tipped) {
-            $('#share-form').slideUp();
             $('#blog-post').fadeIn();
         }
         showHopper();
@@ -41,12 +45,29 @@ $(document).ready(function() {
 	});
 	
 	$('#get').collapse("hide");
+	
+	$("#intro").focus(function() {
+        var $this = $(this);
+        $this.select();
+        // Work around Chrome's little problem
+        $this.mouseup(function() {
+            // Prevent further mouseup intervention
+            $this.unbind("mouseup");
+            return false;
+        });
+    });
 });
 
 function showHopper() {
   $.getJSON(item_url + '/recent?callback=?', function(data) {
     var items = [];
-    $.each(data, function(key, val) {
+    if(data.tipped) {
+        $('#roundup-only').hide();
+        $('#blog-post').show();
+        tipped = true;
+    }
+    
+    $.each(data.items, function(key, val) {
       items.push('<p><a href="' + val.link + '">' + val.title + '</a><br>' + val.description + '<br><small>- ' + val.creator + '</small>');
     });
     var ul = items.join('');

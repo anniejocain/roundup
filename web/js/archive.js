@@ -6,10 +6,10 @@ $(document).ready(function() {
 });
 
 function showHopper() {
-  $.getJSON(item_url + '/recent?callback=?', function(data) {
+  $.getJSON(item_url + '/recent?items=all&callback=?', function(data) {
     var items = [];
-    $.each(data, function(key, val) {
-      items.push('<p><a href="' + val.link + '">' + val.title + '</a><br>' + val.description + '<br><small>- ' + val.creator + '</small>');
+    $.each(data.items, function(key, val) {
+      items.push('<p><img src="' + web_base + 'images/' + val.screenshot + '"><a href="' + val.link + '">' + val.title + '</a><br>' + val.description + '<br><small>- ' + val.creator + '</small>');
     });
     var ul = items.join('');
     
