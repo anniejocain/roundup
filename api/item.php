@@ -163,8 +163,8 @@ class Item extends Controller {
         $json = array();
         while ($row = mysql_fetch_array($result)) {
           $link_list .= '<div class="row"><div class="card span8"><p class="roundup-title"><a href="' . $row[1] . '">' . $row[2] . '</a></p>';
-          $link_list .= '<div class="screenshot span4"><div class="screenshot-frame"><a href="' . $row[1] . '"><img alt="" src="' . $f3->get('SCREEN_CAP_ROOT') . $row[7] . '" /></a></div></div>';
-          $link_list .= '<div class="span4 metadata"><div class="text-frame">' . $row[3] . '<p class="submitted-by">' . $row[4] . '</p></div></div></div></div>';
+          $link_list .= '<div class="screenshot span4"><div class="screenshot-frame"><a href="' . $row[1] . '"><img alt="" src="' . $f3->get('WEB_BASE') . '/images/' . $row[7] . '" /></a></div></div>';
+          $link_list .= '<div class="span4 metadata"><div class="text-frame"><p>' . $row[3] . '</p><p class="submitted-by">' . $row[4] . '</p></div></div></div></div>';
         }
         $link_list .= '</div>';
         $posted_query = "UPDATE `roundup` SET `posted` = '1' WHERE `posted` = 0";
