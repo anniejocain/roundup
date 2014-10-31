@@ -38,6 +38,7 @@ class BookmarkletKey(models.Model):
 class Item(models.Model):
     bookmarklet_key = models.ForeignKey(BookmarkletKey)
     title = models.CharField(max_length=400)
+    description = models.CharField(max_length=140, null=True, blank=True)
     link = models.URLField(max_length=2000, null=True, blank=True)
     contributor = models.CharField(max_length=400, null=True, blank=True)
     contributed_date = models.DateTimeField(auto_now=True)
