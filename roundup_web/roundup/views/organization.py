@@ -27,3 +27,12 @@ def generate_key(request):
     context = RequestContext(request, context)
     
     return render_to_response('organization/generate_key.html', context)
+    
+    
+def install_bookmarklet(request, bookmarklet_key):
+
+    context = {'bookmarklet_key': bookmarklet_key}
+               
+    context = RequestContext(request, context)
+    
+    return render_to_response('organization/install_bookmarklet.html', context)

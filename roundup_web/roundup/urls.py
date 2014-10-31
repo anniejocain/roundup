@@ -13,6 +13,7 @@ urlpatterns = patterns('roundup.views',
 
     # Common Pages
     url(r'^/?$', 'common.landing', name='common_landing'),
+    url(r'^add-item?$', 'common.add_item', name='add_item'),
     
     # Organization Pages
     url(r'^organization/generate-key/$', 'organization.generate_key', name='organization_generate_key'),
