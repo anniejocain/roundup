@@ -1,5 +1,7 @@
-Roundup - Rounding up the team's links for a regular blog post
+Roundup
 =====
+
+Rounding up the team's links for a regular blog post
 
 ## Installing and developing the Roundup application
 

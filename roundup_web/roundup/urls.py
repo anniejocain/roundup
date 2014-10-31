@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
+from roundup.api import ItemResource
+
+item_resource = ItemResource()
 
 urlpatterns = patterns('roundup.views',
 
@@ -24,4 +27,7 @@ urlpatterns = patterns('roundup.views',
     url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', auth_views.password_reset_confirm, {'template_name': 'registration/password_reset_confirm.html'}, name='auth_password_reset_confirm'),
     url(r'^password/reset/complete/$', auth_views.password_reset_complete, {'template_name': 'registration/password_reset_complete.html'}, name='auth_password_reset_complete'),
     url(r'^password/reset/done/$', auth_views.password_reset_done, {'template_name': 'registration/password_reset_done.html'}, name='auth_password_reset_done'),
+
+    # Tastypie urls. We might want to move these into their own file
+    (r'^api/', include(item_resource.urls)),
 )
