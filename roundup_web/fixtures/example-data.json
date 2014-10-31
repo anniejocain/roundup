@@ -1,1 +1,50 @@
-[{"pk": 1, "model": "roundup.organization", "fields": {"public_link": "http://example.com", "slug": "test-org", "user": 1, "public_email": "org@example.com", "name": "Test Org"}}, {"pk": "4a896364-b261-4237-bd99-ed7c12856e61", "model": "roundup.bookmarkletkey", "fields": {"organization": 1, "is_active": true}}, {"pk": 1, "model": "roundup.item", "fields": {"bookmarklet_key": "4a896364-b261-4237-bd99-ed7c12856e61", "contributor": "Example Contributor", "link": "http://example.com/something", "contributed_date": "2014-10-31T17:51:44Z", "title": "Test title"}}]
+[
+{
+    "pk": "4a896364-b261-4237-bd99-ed7c12856e61", 
+    "model": "roundup.bookmarkletkey", 
+    "fields": {
+        "organization": 1, 
+        "is_active": true
+    }
+},
+{
+    "pk": 1, 
+    "model": "roundup.item", 
+    "fields": {
+        "bookmarklet_key": "4a896364-b261-4237-bd99-ed7c12856e61", 
+        "contributor": "Example Contributor", 
+        "link": "http://example.com/something", 
+        "contributed_date": "2014-10-31T17:51:44Z", 
+        "title": "Test title"
+    }
+},
+{
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "test_user", 
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": false, 
+        "is_staff": false, 
+        "last_login": "2014-10-31T17:40:49Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "pbkdf2_sha256$12000$L0hJeMn2gAGP$eV+Nm8DaRsvLmzW+UzfRASVZmELphf0+JwN9w9kXBL4=", 
+        "email": "test_user@example.com", 
+        "date_joined": "2014-10-31T17:40:49Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "roundup.organization", 
+    "fields": {
+        "public_link": "http://example.com", 
+        "slug": "test-org", 
+        "user": 1, 
+        "public_email": "org@example.com", 
+        "name": "Test Org"
+    }
+}
+]
