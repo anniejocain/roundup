@@ -16,10 +16,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'roundup',                      # Or path to database file if using sqlite3.
-        'USER': 'roundup',                      # Not used with sqlite3.
-        'PASSWORD': 'roundup',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'roundup_annie',                      # Or path to database file if using sqlite3.
+        'USER': 'roundup_annie',                      # Not used with sqlite3.
+        'PASSWORD': 'roundup_annie',                  # Not used with sqlite3.
+        'HOST': 'hlslibdata.law.harvard.edu',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
