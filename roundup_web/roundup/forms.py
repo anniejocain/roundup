@@ -4,6 +4,8 @@ from django import forms
 from django.contrib.auth.models import User
 
 class AddItemForm(forms.ModelForm):
+    
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))
 
     class Meta:
         model = Item

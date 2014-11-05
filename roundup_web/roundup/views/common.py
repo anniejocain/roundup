@@ -3,11 +3,15 @@ from roundup.forms import (
     AddItemForm,
 )
 
+import logging
+
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
+
+logger = logging.getLogger(__name__)
 
 
 def landing(request):
@@ -48,7 +52,7 @@ def add_item(request):
                 'link':link,
                 'description':description,
                 'contributor':contributor}
-        add_form = AddItemForm(form_data)
+        add_form = AddItemForm(initial=form_data)
     
         context = {'add_form': add_form,}           
         context = RequestContext(request, context)
