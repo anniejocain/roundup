@@ -1,6 +1,6 @@
 from roundup.models import Organization, BookmarkletKey
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
@@ -32,7 +32,11 @@ def generate_key(request):
     
 def install_bookmarklet(request, bookmarklet_key_id):
 
-    bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
+    try:
+        bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
+    except BookmarkletKey.DoesNotExist:
+        raise Http404
+        
     organization = bookmarklet_key.organization
     bookmarklet_domain = Site.objects.get_current().domain
 
