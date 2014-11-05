@@ -1,4 +1,4 @@
-from roundup.models import Item, BookmarkletKey
+from roundup.models import Item, BookmarkletKey, Organization
 from roundup.forms import (
     AddItemForm,
 )
@@ -28,6 +28,7 @@ def add_item(request):
 
     bookmarklet_key_id = request.GET.get('bookmarklet_key', '')
     bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
+    organization = bookmarklet_key.organization
     title = request.GET.get('title', '')
     link = request.GET.get('link', '')
     description = request.GET.get('description', '')
@@ -54,7 +55,7 @@ def add_item(request):
                 'contributor':contributor}
         add_form = AddItemForm(initial=form_data)
     
-        context = {'add_form': add_form,}           
+        context = {'add_form': add_form, 'organization': organization}           
         context = RequestContext(request, context)
     
         return render_to_response('add_item.html', context)

@@ -17,6 +17,7 @@ urlpatterns = patterns('roundup.views',
     
     # Organization Pages
     url(r'^organization/generate-key/$', 'organization.generate_key', name='organization_generate_key'),
+    url(r'^organization/install-bookmarklet/(?P<bookmarklet_key_id>[a-zA-Z0-9\-]+)/$', 'organization.install_bookmarklet', name='organization_install_bookmarklet'),
     
      # Session/account management
     url(r'^password/change/$', auth_views.password_change, {'template_name': 'registration/password_change_form.html'}, name='auth_password_change'),
