@@ -16,7 +16,6 @@
     {% block styles %}<link rel="stylesheet" href="{{ STATIC_PREFIX }}css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="{{ STATIC_PREFIX }}css/bootstrap-theme.css" type="text/css" />
     <link rel="stylesheet" media="all" href="{{ STATIC_PREFIX }}css/roundup.css" />{% endblock styles %}
-	{% block scripts %}{% endblock scripts %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -27,5 +26,8 @@
 
   <body>
     {% block content %}{% endblock content %}
+    
+    <script src="{{ STATIC_PREFIX }}js/jquery-1.11.1.min.js"></script>
+    {% block scripts %}{% endblock scripts %}
   </body>
 </html>
