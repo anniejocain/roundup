@@ -80,12 +80,9 @@ Go for it!
 def display_items(request, slug):
     """Display links"""
 
-    org = Organization.objects.get(slug=slug)
-
-    items = Item.objects.get(bookmarklet_key__organization=org)
-    context = {'items': items}
+    context = {'org_slug': slug}
 
     context = RequestContext(request, context)
 
-    return render_to_response('links.html', context)
+    return render_to_response('items.html', context)
 

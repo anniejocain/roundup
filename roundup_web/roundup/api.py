@@ -28,7 +28,7 @@ class ItemResource(ModelResource):
         # TODO: Use the tastypie/django pagination stuff to handle this.
         # there has to be a good tastypie pattern for this
         org_slug = request.GET.get('q', '')
-        objects = Item.objects.filter(bookmarklet_key__organization__slug=org_slug)
+        objects = Item.objects.filter(bookmarklet_key__organization__slug=org_slug).order_by('-contributed_date')[:200]
         
         object_list = []
         for o in objects:
