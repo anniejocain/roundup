@@ -1,1 +1,15 @@
-Roundup landing page
+{% extends "layouts/base.html" %}
+{% load static bootstrap_tags %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block title %}Roundup{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>You should get on this bandwagon!</h1>
+        <p>Landing page landing page</p>
+    </div><!-- /.container -->
+
+
+{% endblock content %}

@@ -5,7 +5,6 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
-from django.contrib.sites.models import Site
 
 
 def generate_key(request):
@@ -29,19 +28,3 @@ def generate_key(request):
     
     return render_to_response('organization/generate_key.html', context)
     
-    
-def install_bookmarklet(request, bookmarklet_key_id):
-
-    try:
-        bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
-    except BookmarkletKey.DoesNotExist:
-        raise Http404
-        
-    organization = bookmarklet_key.organization
-    bookmarklet_domain = Site.objects.get_current().domain
-
-    context = {'bookmarklet_key': bookmarklet_key_id, 'organization': organization, 'bookmarklet_domain': bookmarklet_domain}
-               
-    context = RequestContext(request, context)
-    
-    return render_to_response('organization/install_bookmarklet.html', context)

@@ -1,6 +1,8 @@
 {% extends "layouts/base.html" %}
 {% load bootstrap_tags %}
 
+{% block title %}Login{% endblock title %}
+
 {% block content %}
 
 <div class="container">
@@ -11,7 +13,7 @@
     {% endif %}
 
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-sm-4">
             <h2>Login</h2>
 
                 {% if next %}
@@ -22,13 +24,17 @@
                 {% csrf_token %}
 
                      {{ form|as_bootstrap }}
-                    <button type="submit" class="btn btn-primary login">Login</button>
-                    <br /><br />
-                    <p>Forgot your password?<br /> No problem, we can help you <a href="{% url 'auth_password_reset' %}">create a new one.</a></p>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
 
             </div><!-- end span -->
         </div><!-- end row -->
+        <div class="row">
+            <div class="col-sm-5">
+                <br /><br />
+                <p>Forgot your password?<br /> No problem, we can help you <a href="{% url 'auth_password_reset' %}">create a new one.</a></p>
+            </div>
+        </div>
 </div><!-- end container -->
 {% endblock content %}
 

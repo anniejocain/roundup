@@ -2,7 +2,7 @@
 {% load static bootstrap_tags %}
 {% get_static_prefix as STATIC_PREFIX %}
 
-{% block title %}<title>Add item</title>{% endblock title %}
+{% block title %}Add item{% endblock title %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
                     {% csrf_token %}
                     {{ add_form|as_bootstrap }}
                     <div class="form-actions">
-                        <input type="submit" value="Add" class="btn btn-primary" />
+                        <input type="submit" value="Add" class="btn btn-primary btn-lg" />
                     </div>
                 </form>
             </div>
