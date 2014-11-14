@@ -11,3 +11,13 @@
     background-color:#AB76E8;
     margin-right:8px;
 }
+
+/* Item page for org page - start */
+
+.single-item-container {
+    background-color: #f5f6f7;
+    margin-top: 5px;
+    padding: 10px 0;
+}
+
+/* Item page for org page - end */
