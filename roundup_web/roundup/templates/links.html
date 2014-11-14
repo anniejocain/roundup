@@ -2,19 +2,35 @@
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
 
-{% block title %}<title>Links</title>{% endblock title %}
+{% block title %}Items{% endblock title %}
 
 {% block content %}
 
     <div class="container">
-        <h1>All your links</h1>
-        <div class="row">
-            <div class="col-xs-12">
-				some link here
-            </div>
-        </div>
-
+        <h1>All your items</h1>
+		<div id="item-container"></div>
     </div><!-- /.container -->
 
 
 {% endblock content %}
+
+{% block scripts %}
+	<script src="{{ STATIC_PREFIX }}js/handlebars-v2.0.0.js"></script>
+	<script src="{{ STATIC_PREFIX }}js/item.js"></script>
+	
+	<script id="item-template" type="text/x-handlebars-template">
+	{% verbatim %}
+		{{#each item}}
+			<div class="row single-item-container">
+				<div class="col-xs-12">	
+					<p><a href="{{link}}" target="_blank">{{title}}</a></p>
+					<p>{{description}}</p>
+					<p>{{contributor}}</p>
+					<p>{{contributed_date}}</p>
+				</div>
+			</div>
+		{{/each}}	
+	</script>
+	{% endverbatim %}
+{% endblock scripts %}
+
