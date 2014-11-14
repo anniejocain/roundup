@@ -13,11 +13,13 @@ urlpatterns = patterns('roundup.views',
 
     # Common Pages
     url(r'^/?$', 'common.landing', name='common_landing'),
+    url(r'^add-item?$', 'common.add_item', name='add_item'),
+    url(r'^install-bookmarklet/(?P<bookmarklet_key_id>[a-zA-Z0-9\-]+)/$', 'common.install_bookmarklet', name='common_install_bookmarklet'),
     
     # Organization Pages
-    url(r'^organization/generate-key/$', 'organization.generate_key', name='organization_generate_key'),
     url(r'^(?P<slug>[a-zA-Z-]+)/items/?$', 'organization.display_items', name='organization_display_items'),
-        
+    url(r'^dashboard/generate-key/$', 'dashboard.generate_key', name='dashboard_generate_key'),
+    
      # Session/account management
     url(r'^password/change/$', auth_views.password_change, {'template_name': 'registration/password_change_form.html'}, name='auth_password_change'),
     url(r'^login/$', auth_views.login, {'template_name': 'registration/login.html'}, name='auth_login'),

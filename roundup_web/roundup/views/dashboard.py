@@ -1,6 +1,6 @@
 from roundup.models import Organization, BookmarkletKey, Item
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
@@ -27,7 +27,6 @@ def generate_key(request):
     context = RequestContext(request, context)
     
     return render_to_response('organization/generate_key.html', context)
-    
 def display_items(request, slug):
     """Display links"""
 

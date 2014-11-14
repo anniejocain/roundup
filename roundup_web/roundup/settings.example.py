@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'roundup',
     'south',
     'tastypie',
+    'django_forms_bootstrap',
 )
 
 # A sample logging configuration. The only tangible logging

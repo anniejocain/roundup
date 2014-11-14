@@ -1,9 +1,4 @@
-{% extends "layout-responsive.html" %}
-
-
-{% block meta_description %}
-Log out of your Perma.cc account.
-{% endblock %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
 <div class="container">
@@ -11,7 +6,7 @@ Log out of your Perma.cc account.
 		<div class="col-sm-12">	
 			<h2>You have been logged out.</h2>
 		
-			<p>Logged out a bit too soon? No worries, <a href="{% url 'user_management_limited_login' %}">sign back in</a></p>
+			<p>Logged out a bit too soon? No worries, <a href="{% url 'auth_login' %}">sign back in</a>.</p>
 		</div>
 	</div>
 </div>
