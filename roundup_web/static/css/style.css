@@ -28,6 +28,11 @@
     margin-top:35px;
 }
 
+.dashboard-invite-new {
+    position:relative;
+    top:-5px;
+}
+
 .count-label {
     font-family: $sans-font;
     font-size:12px;
