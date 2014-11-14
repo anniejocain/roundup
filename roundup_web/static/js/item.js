@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     // Get our org's links from the API and print them here on load
     var request = $.ajax({
-        url: "/api/item/search/?q=test-org&format=json",
+        url: settings.url,
         type: "GET",
         dataType: "json"
     });
