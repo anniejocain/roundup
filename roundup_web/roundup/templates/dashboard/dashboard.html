@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+{% load static bootstrap_tags %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block title %}Roundup{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>{{organization}} Dashboard</h1>
+        <div class="row dashboard-row">
+            <div class="col-sm-3">
+                <p class="count-number">{{ links }}</p>
+                <p class="count-label">Links</p>
+            </div>
+            <div class="col-sm-3">
+                <p class="count-number">{{ contributors }}</p>
+                <p class="count-label">Contributors</p>
+            </div>
+        </div>
+        <div class="row dashboard-row">
+            <div class="col-sm-4">
+                <a href="{% url 'dashboard_generate_key' %}" class="btn btn-primary btn-lg active" role="button">Invite new contributor</a>
+            </div>
+        </div>
+    </div><!-- /.container -->
+
+
+{% endblock content %}

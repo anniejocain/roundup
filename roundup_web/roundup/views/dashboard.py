@@ -13,6 +13,22 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
+def landing(request):
+    """The dashboard landing page"""
+    
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('auth_login'))
+
+    org = Organization.objects.get(user=request.user)
+    contributors = BookmarkletKey.objects.all().filter(organization=org).count()
+
+    context = {'organization': org, 'contributors': contributors}
+               
+    context = RequestContext(request, context)
+    
+    return render_to_response('dashboard/dashboard.html', context)
+
+
 def generate_key(request):
     """Generate a bookmarklet key to hand out"""
 

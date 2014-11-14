@@ -21,3 +21,28 @@
 }
 
 /* Item page for org page - end */
+
+/* Dashboard */
+
+.dashboard-row {
+    margin-top:35px;
+}
+
+.count-label {
+    font-family: $sans-font;
+    font-size:12px;
+    margin-bottom:0px;
+    margin-top:0px;
+    color:#888;
+    font-weight:400;
+}
+
+.count-number {
+    font-family: $sans-font;
+    font-size:48px;
+    font-weight:500;
+    line-height:1.1em;
+    color: #333;
+}
+
+/* Dashboard end */

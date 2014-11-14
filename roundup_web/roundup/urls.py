@@ -17,6 +17,7 @@ urlpatterns = patterns('roundup.views',
     url(r'^install-bookmarklet/(?P<bookmarklet_key_id>[a-zA-Z0-9\-]+)/$', 'common.install_bookmarklet', name='common_install_bookmarklet'),
     
     # Organization Pages
+    url(r'^dashboard/$', 'dashboard.landing', name='dashboard_landing'),
     url(r'^(?P<slug>[a-zA-Z-]+)/items/?$', 'dashboard.display_items', name='dashboard_display_items'),
     url(r'^dashboard/generate-key/$', 'dashboard.generate_key', name='dashboard_generate_key'),
     
