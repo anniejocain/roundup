@@ -19,6 +19,7 @@ class BookmarkletKey(models.Model):
     organization = models.ForeignKey(Organization)
     key = models.CharField(max_length=255, null=False, blank=False, primary_key=True)
     is_active = models.BooleanField(default=True)
+    email = models.EmailField(max_length=254, null=True, blank=True)
     
     def save(self, *args, **kwargs):
         """
