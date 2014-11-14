@@ -98,6 +98,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -177,4 +178,4 @@ LOGGING = {
 }
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/control'
+LOGIN_REDIRECT_URL = '/dashboard/'

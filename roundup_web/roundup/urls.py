@@ -12,7 +12,7 @@ item_resource = ItemResource()
 urlpatterns = patterns('roundup.views',
 
     # Common Pages
-    url(r'^/?$', 'common.landing', name='common_landing'),
+    url(r'^$', 'common.landing', name='common_landing'),
     url(r'^add-item?$', 'common.add_item', name='add_item'),
     url(r'^install-bookmarklet/(?P<bookmarklet_key_id>[a-zA-Z0-9\-]+)/$', 'common.install_bookmarklet', name='common_install_bookmarklet'),
     

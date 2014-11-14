@@ -9,15 +9,14 @@ from django.core.context_processors import csrf
 from django.core.mail import send_mail
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
 
+@login_required
 def landing(request):
     """The dashboard landing page"""
-    
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('auth_login'))
 
     org = Organization.objects.get(user=request.user)
     contributors = BookmarkletKey.objects.all().filter(organization=org).count()
@@ -29,11 +28,9 @@ def landing(request):
     return render_to_response('dashboard/dashboard.html', context)
 
 
+@login_required
 def generate_key(request):
     """Generate a bookmarklet key to hand out"""
-
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('auth_login'))
 
     org = Organization.objects.get(user=request.user)
     displayKey = None
