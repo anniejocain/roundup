@@ -23,8 +23,10 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                {% if displayKey %}
-                    <p>An invite has been sent!</p>
+                {% if bookmarkletLink %}
+                    <br><br>
+                    <p>An invite has been sent with this installation link!</p>
+                    <p><a href="{{bookmarkletLink}}">{{bookmarkletLink}}</a></p>
                 {% endif %}
             </div>
         </div>
