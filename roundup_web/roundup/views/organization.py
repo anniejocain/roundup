@@ -1,4 +1,4 @@
-from roundup.models import Organization, BookmarkletKey
+from roundup.models import Organization, BookmarkletKey, Item
 
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -27,3 +27,15 @@ def generate_key(request):
     context = RequestContext(request, context)
     
     return render_to_response('organization/generate_key.html', context)
+    
+def display_items(request, slug):
+    """Display links"""
+
+    org = Organization.objects.get(slug=slug)
+
+    items = Item.objects.get(bookmarklet_key__organization=org)
+    context = {'items': items}
+
+    context = RequestContext(request, context)
+
+    return render_to_response('links.html', context)
