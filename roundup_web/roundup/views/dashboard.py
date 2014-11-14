@@ -21,6 +21,7 @@ def generate_key(request):
 
     org = Organization.objects.get(user=request.user)
     displayKey = None
+    bookmarkletLink = None
     
     if request.method == "POST":
         invite_email = request.POST.get('invite_email', '')
@@ -31,17 +32,18 @@ def generate_key(request):
         displayKey = bookmarkletKey.key
         
         host = request.get_host()
+        bookmarkletLink = 'http://{host}/install-bookmarklet/{bookmarklet_key}'.format(host=host ,bookmarklet_key=displayKey)
 
         if settings.DEBUG == False:
             host = settings.HOST
         
         content = '''{organization} has invited you to contribute links. Install a bookmarklet here.
             
-        http://{host}/install-bookmarklet/{bookmarklet_key}
+http://{host}/install-bookmarklet/{bookmarklet_key}
                     
-        Go for it!
+Go for it!
                 
-        '''.format(organization=org.name, host=host ,bookmarklet_key=displayKey)
+'''.format(organization=org.name, host=host ,bookmarklet_key=displayKey)
         
         logger.debug(content)
         
@@ -52,7 +54,7 @@ def generate_key(request):
             [invite_email], fail_silently=False
         )
     
-    context = {'user': request.user, 'displayKey': displayKey}
+    context = {'user': request.user, 'bookmarkletLink': bookmarkletLink}
                
     context = RequestContext(request, context)
     

@@ -43,7 +43,7 @@ def add_item(request):
             item.bookmarklet_key = bookmarklet_key
             item.save()
             
-            return HttpResponseRedirect(reverse('common_landing'))    
+            return HttpResponseRedirect(reverse('dashboard_display_items', kwargs={'slug' : organization.slug}))   
         else:
             context = {'add_form': add_form,} 
             context = RequestContext(request, context)
