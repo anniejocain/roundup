@@ -3,6 +3,8 @@ from roundup.forms import (
     AddItemForm,
 )
 
+from roundup.tasks import hello
+
 import logging
 
 from django.http import HttpResponseRedirect
@@ -17,6 +19,8 @@ logger = logging.getLogger(__name__)
 
 def landing(request):
     """Our main landing page"""
+
+    hello.delay()
 
     context = {}
                

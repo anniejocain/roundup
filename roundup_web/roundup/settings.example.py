@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'south',
     'tastypie',
     'django_forms_bootstrap',
+    'kombu.transport.django', # Using the Django DB as our broker. We should NOT do this in production
 )
 
 # A sample logging configuration. The only tangible logging
@@ -179,3 +180,10 @@ LOGGING = {
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
+
+
+# Celery/Broker stuff
+BROKER_URL = 'django://'
+
+# Print email to console. Handy in a dev env.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
