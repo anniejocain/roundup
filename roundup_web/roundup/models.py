@@ -20,6 +20,7 @@ class BookmarkletKey(models.Model):
     key = models.CharField(max_length=255, null=False, blank=False, primary_key=True)
     is_active = models.BooleanField(default=True)
     email = models.EmailField(max_length=254, null=True, blank=True)
+    display_name = models.CharField(max_length=400, null=True, blank=True)
     
     def save(self, *args, **kwargs):
         """

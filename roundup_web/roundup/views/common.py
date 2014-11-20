@@ -35,12 +35,14 @@ def add_item(request):
     title = request.GET.get('title', '')
     link = request.GET.get('link', '')
     description = request.GET.get('description', '')
-    contributor = request.GET.get('contributor', '')
+    contributor = bookmarklet_key.display_name
     
     if request.method == 'POST':
         add_form = AddItemForm(request.POST,)
         
         if add_form.is_valid():
+            bookmarklet_key.display_name = add_form.cleaned_data['contributor']
+            bookmarklet_key.save()
             item = add_form.save(commit=False)
             item.bookmarklet_key = bookmarklet_key
             item.save()

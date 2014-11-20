@@ -10,12 +10,8 @@
         <h1>Install bookmarklet</h1>
         <div class="row">
             <div class="col-md-6">
-                <h4 class="bookmarklet-install-step"><span class="badge">1</span> Choose how to sign your contributions</h4>
-          <form class="form" role="form">
-            <p><input type="text" class="form-control input-lg" placeholder="Your name or Twitter handle" id="bookmarklet-name"></p>
-          </form>
-          <h4 class="bookmarklet-install-step"><span class="badge">2</span> Drag this bookmarklet into your browser toolbar</h4>
-          <a id="bookmarklet" class="btn btn-primary btn-lg" href="javascript:(function(){%20window.open(%22http://{{bookmarklet_domain}}/add-item?link=%22+encodeURIComponent(%20location.href)+%22&title=%22+encodeURIComponent(document.title)+%22&bookmarklet_key={{bookmarklet_key}}&contributor=%22);%20})();">Give away</a>
+          <h4 class="bookmarklet-install-step">Drag this bookmarklet into your browser toolbar</h4>
+          <a id="bookmarklet" class="btn btn-primary btn-lg" href="javascript:(function(){%20window.open(%22http://{{bookmarklet_domain}}/add-item?link=%22+encodeURIComponent(%20location.href)+%22&title=%22+encodeURIComponent(document.title)+%22&bookmarklet_key={{bookmarklet_key}}%22);%20})();">Signal back</a>
           </div>
         </div>
 
@@ -23,12 +19,3 @@
 
 
 {% endblock content %}
-{% block scripts %}
-<script>
-$('#bookmarklet-name').keyup(function() {
-	  var name = $(this).val();
-	  var bookmarklet = "javascript:(function(){%20window.open(%22http://{{bookmarklet_domain}}/add-item?link=%22+encodeURIComponent(%20location.href)+%22&title=%22+encodeURIComponent(document.title)+%22&bookmarklet_key={{bookmarklet_key}}&contributor=" + name + "%22);%20})();";
-	  $("#bookmarklet").attr('href', bookmarklet);
-	});
-</script>
-{% endblock scripts %}
