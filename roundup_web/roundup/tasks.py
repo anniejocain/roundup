@@ -10,6 +10,14 @@ def get_gallery_images(target_url):
     might represent that URL
     """
     
+    # get a url
+    # when we get images back, write them to a temp media store
+    # update a temp model with them (we might want to make this a redis thing later)
+    # once we the user chooses one, we can put that in permanent media store and 
+    # update the item's model db with that image
+    
+    
+    
     # Get an png capture from our preview app
     
     # Get the twitter card image

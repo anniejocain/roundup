@@ -46,3 +46,22 @@ class Item(models.Model):
         
     def __unicode__(self):
         return self.title
+
+class ImageGallery(models.Model):
+    """
+    When a user creates a new item we grab a number of images for them
+    and present them in an image gallery. Those images are tracked in
+    ItemImage. We use this model to group them together. The images
+    that aren't selected by the user will be deleted, as will the 
+    ImageGallery instance.
+    """
+    created_date = models.DateTimeField(auto_now=True)
+    
+
+class ItemImage(models.Model):
+    """
+    We want to associate an image with an item. We track that image here.
+    """
+    item = models.ForeignKey(Item, null=True, blank=True)
+    image_gallery = models.ForeignKey(ImageGallery, null=True, blank=True)
+    item_image = models.ImageField(upload_to='item_images')
