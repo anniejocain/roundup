@@ -3,7 +3,7 @@ from roundup.forms import (
     AddItemForm,
 )
 
-from roundup.tasks import hello
+from roundup.tasks import get_gallery_images
 
 import logging
 
@@ -19,8 +19,6 @@ logger = logging.getLogger(__name__)
 
 def landing(request):
     """Our main landing page"""
-
-    hello.delay()
 
     context = {}
                
@@ -54,6 +52,9 @@ def add_item(request):
             return render_to_response('add_item.html', context)
     
     else:
+        
+        get_gallery_images.delay(link)
+        
         form_data = {'title':title, 
                 'link':link,
                 'description':description,
