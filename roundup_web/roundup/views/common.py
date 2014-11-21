@@ -4,7 +4,7 @@ from roundup.forms import (
 )
 from roundup.tasks import get_twitter_card_image, get_screen_capture
 
-import logging
+import logging, json
 import requests
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -14,6 +14,7 @@ from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
 from django.contrib.sites.models import Site
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 logger = logging.getLogger(__name__)
 
@@ -74,13 +75,7 @@ def add_item(request):
             context = RequestContext(request, context)
             return render_to_response('add_item.html', context)
     
-    else:
-        
-        # Start gathering our images
-        image_gallery = ImageGallery()
-        image_gallery.save()
-        _get_gallery_images(image_gallery.id, link)
-        
+    else:        
         form_data = {'title':title, 
                 'link':link,
                 'description':description,
@@ -110,11 +105,29 @@ def install_bookmarklet(request, bookmarklet_key_id):
     return render_to_response('install_bookmarklet.html', context)
     
     
+# TODO: this shouldn't be csrf exempt. or if it is, we should require a bookmarklet_key
+@csrf_exempt
 def get_gallery(request):
+    
+    if request.method == 'POST':
+        target_url = request.POST.get('target_url', '')
+        
+        # Start gathering our images
+        image_gallery = ImageGallery()
+        image_gallery.save()
+        _get_gallery_images(image_gallery.id, target_url)
+
+        response_data = {}
+        response_data['gallery_id'] = image_gallery.id
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    
 
     gallery_id = request.GET.get('gallery_id', '')
 
     gallery_images = ItemImage.objects.filter(image_gallery__id=gallery_id)
     
-    data = serializers.serialize('json', gallery_images)
-    return HttpResponse(data, mimetype='application/json')
+    image_list = []
+    for g_i in gallery_images:
+        image_list.append({"path": g_i.item_image.url})
+    
+    return HttpResponse(json.dumps(image_list), mimetype='application/json')

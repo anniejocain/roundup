@@ -25,16 +25,21 @@ def get_twitter_card_image(image_gallery_id, target_url, markup):
     # Get our markup. And parse it. This should be moved to a common function
     soup = BeautifulSoup(markup)
     
+    
+    # It seems that Twitter images can have a couple of different names
+    twitter_image = None
     if soup.find('meta', {"name": "twitter:image"}):
         twitter_image = soup.find('meta', {"name": "twitter:image"})['content']
-
+        
+    if soup.find('meta', {"name": "twitter:image:src"}):
+        twitter_image = twitter_image = soup.find('meta', {"name": "twitter:image:src"})['content']
+    
+    # Did we find a twitter image in our markup? If so, let's get it
+    if  twitter_image:
         # Get our filename. Isn't there a better way to do this?
         parsed_url = urlparse(twitter_image)
         filename = parsed_url.path.split('/')[-1]
         
-        print target_url
-        print filename
-
         # Add the image to our datastore and update the gallery
         image_content = ContentFile(requests.get(twitter_image).content)
         image_gallery = ImageGallery.objects.get(id=image_gallery_id)

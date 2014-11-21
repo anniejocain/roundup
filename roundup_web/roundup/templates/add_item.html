@@ -19,9 +19,30 @@
                 </form>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-8" id="gallery_container">
+			</div>
+		</div>
     </div><!-- /.container -->
 
 
 {% endblock content %}
-{% block scripts %}<script src="{{ STATIC_PREFIX }}js/add.js"></script>{% endblock scripts %}
+{% block scripts %}
+<script src="{{ STATIC_PREFIX }}js/handlebars-v2.0.0.js"></script>
+
+<script>
+	var org_slug = '{{org_slug}}';
+	var settings = {'url': '/api/item/search/?q=' + org_slug + '&format=json'};
+</script>
+<script src="{{ STATIC_PREFIX }}js/add.js"></script>
+
+<script id="image-template" type="text/x-handlebars-template">
+{% verbatim %}
+	{{#each item}}
+		<img src="{{path}}" width="200">
+	{{/each}}	
+</script>
+{% endverbatim %}
+
+
+{% endblock scripts %}
