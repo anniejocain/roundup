@@ -19,18 +19,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-10 contributors-list">
                 <h2>Contributors</h2>
                 {% for contributor in contributors %}
+                <form action="" method="POST">
+	                {% csrf_token %}
+	                <input type="hidden" name="bookmarklet_key_id" value="{{contributor.key}}">
                 <div class="listed-contributor row">
-                    <div class="listed-contributor-email col-sm-6">{{ contributor.email }}</div>
-                    <div class="listed-contributor-items col-sm-1">{{contributor.items}}</div>
-                    <div class="col-sm-3">
-                        {% if contributor.is_active %}
-                        active
-                        {% endif %}
-                    </div>
+                    <div class="listed-contributor-email col-sm-6">{{ contributor.email }}{% if not contributor.is_active %}<br><small class="text-danger">deactivated</small><button type="submit" class="btn btn-success btn-xs">reactivate</button>{% else %}<button type="submit" class="btn btn-deactivate btn-xs">deactivate</button>{% endif %}</div>
+                    <div class="listed-contributor-items col-sm-2">{{contributor.items}}</div>
                 </div>
+                </form>
                 {% endfor %}
             </div>
         </div>

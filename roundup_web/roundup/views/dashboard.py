@@ -25,6 +25,15 @@ def landing(request):
     contributors_count = contributors.count()
 
     context = {'organization': org, 'contributors': contributors, 'items': items, 'contributors_count': contributors_count}
+    
+    if request.method == 'POST':
+        bookmarklet_key = BookmarkletKey.objects.get(key=request.POST.get("bookmarklet_key_id", ""))
+        if bookmarklet_key.is_active == True:
+            bookmarklet_key.is_active = False
+        else:
+            bookmarklet_key.is_active = True
+        logger.debug(bookmarklet_key.is_active)
+        bookmarklet_key.save()
                
     context = RequestContext(request, context)
     
