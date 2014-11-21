@@ -10,6 +10,9 @@ django-tastypie==0.12.1
 django-forms-bootstrap==3.0.1
 celery==3.1.16
 Pillow==2.6.1
+kombu==3.0.24
+billiard==3.3.0.19 #Do we need this? It seems to be tied to Celery/Kombu?
+pytz==2014.9
 
 # deployment
 gunicorn==18.0
