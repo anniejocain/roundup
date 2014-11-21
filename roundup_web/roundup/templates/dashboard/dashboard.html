@@ -2,7 +2,7 @@
 {% load static bootstrap_tags %}
 {% get_static_prefix as STATIC_PREFIX %}
 
-{% block title %}Roundup{% endblock title %}
+{% block title %}Dashboard | Signal back{% endblock title %}
 
 {% block content %}
 
@@ -10,12 +10,28 @@
         <h1>{{organization}} Dashboard <small class="dashboard-invite-new"><a href="{% url 'dashboard_generate_key' %}" role="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Send invite</a></small></h1>
         <div class="row dashboard-row">
             <div class="col-sm-3">
-                <p class="count-number">{{ links }}</p>
-                <p class="count-label">Links</p>
+                <p class="count-number">{{ items }}</p>
+                <p class="count-label">Items</p>
             </div>
             <div class="col-sm-3">
-                <p class="count-number">{{ contributors }}</p>
+                <p class="count-number">{{ contributors_count }}</p>
                 <p class="count-label">Contributors</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <h2>Contributors</h2>
+                {% for contributor in contributors %}
+                <div class="listed-contributor row">
+                    <div class="listed-contributor-email col-sm-6">{{ contributor.email }}</div>
+                    <div class="listed-contributor-items col-sm-1">{{contributor.items}}</div>
+                    <div class="col-sm-3">
+                        {% if contributor.is_active %}
+                        active
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div><!-- /.container -->
