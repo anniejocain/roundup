@@ -1,40 +1,69 @@
 from __future__ import absolute_import
 
+from roundup.models import ItemImage, ImageGallery
+
+from django.core.files import File
+from django.core.files.base import ContentFile
+
+import urllib, json
+from urlparse import urlparse
+
 from celery import shared_task
+from bs4 import BeautifulSoup
+import requests
 
 
-def _retrieve_image(image_url):
-    """
-    Get the image from the image_url param and store it
-    """
-
-    pass
 
 @shared_task
-def get_gallery_images(target_url):
+def get_twitter_card_image(image_gallery_id, target_url, markup):
     """
-    This funciton accepts a url and will create a gallery of images that 
-    might represent that URL
+    This function will see if there is a Twitter Card image associated
+    with the URL. If there is, it'll save it to our media store
+    and update our gallery model.
     """
+    
+    # Get our markup. And parse it. This should be moved to a common function
+    soup = BeautifulSoup(markup)
+    
+    if soup.find('meta', {"name": "twitter:image"}):
+        twitter_image = soup.find('meta', {"name": "twitter:image"})['content']
 
-    print "getting images for %s" % target_url
-    
-    # get a url
-    # when we get images back, write them to a temp media store
-    # update a temp model with them (we might want to make this a redis thing later)
-    # once we the user chooses one, we can put that in permanent media store and 
-    # update the item's model db with that image
-    
-    # we probably want a separate task for each one of these downloads?
-    
-    
-    # Get an png capture from our preview app
-    
-    # Get the twitter card image
-    
-    # Get the facebook OG image
-    
-    # Get the first n images using beautiful soup
-    
-    print 'done'
-    
+        # Get our filename. Isn't there a better way to do this?
+        parsed_url = urlparse(twitter_image)
+        filename = parsed_url.path.split('/')[-1]
+        
+        print target_url
+        print filename
+
+        # Add the image to our datastore and update the gallery
+        image_content = ContentFile(requests.get(twitter_image).content)
+        image_gallery = ImageGallery.objects.get(id=image_gallery_id)
+        item_image = ItemImage(image_gallery=image_gallery)
+        item_image.item_image.save(filename, image_content)
+        item_image.save()
+        
+
+@shared_task
+def get_screen_capture(image_gallery_id, target_url, markup):
+    """
+    This function will get a screen capture of the page from our
+    preview service. Then, it'll save it to our media store
+    and update our gallery model.
+    """
+    preview_url = 'http://hlslwebtest.law.harvard.edu/preview/create?url=%s' % urllib.quote(target_url)
+
+    response = requests.get(preview_url).text
+    serialized_response = json.loads(response)
+
+    preview_url_image = 'http://hlslwebtest.law.harvard.edu%s' % serialized_response['image_url']
+
+    # Get our filename. Isn't there a better way to do this?
+    parsed_url = urlparse(preview_url_image)
+    filename = parsed_url.path.split('/')[-1]
+
+    # Add the image to our datastore and update the gallery
+    image_content = ContentFile(requests.get(preview_url_image).content)
+    image_gallery = ImageGallery.objects.get(id=image_gallery_id)
+    item_image = ItemImage(image_gallery=image_gallery)
+    item_image.item_image.save(filename, image_content)
+    item_image.save()

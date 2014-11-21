@@ -1,3 +1,4 @@
 roundup_web/roundup/settings.py
+roundup_web/media
 *.pyc
 celerybeat-schedule.db

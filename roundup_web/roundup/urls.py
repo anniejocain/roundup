@@ -31,6 +31,9 @@ urlpatterns = patterns('roundup.views',
     url(r'^password/reset/complete/?$', auth_views.password_reset_complete, {'template_name': 'registration/password_reset_complete.html'}, name='auth_password_reset_complete'),
     url(r'^password/reset/done/?$', auth_views.password_reset_done, {'template_name': 'registration/password_reset_done.html'}, name='auth_password_reset_done'),
 
+    # Services. These should probably be in the API
+    url(r'^service/gallery/$', 'common.get_gallery', name='common_get_gallery'),
+
     # Tastypie urls. We might want to move these into their own file
     (r'^api/', include(item_resource.urls)),
     
