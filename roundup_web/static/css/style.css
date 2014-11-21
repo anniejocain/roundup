@@ -67,6 +67,11 @@ body {
     top:-5px;
 }
 
+.contributors-list {
+    border-bottom:1px solid #e89625;
+    margin-bottom:25px;
+}
+
 .count-label {
     font-family: $sans-font;
     font-size:14px;
@@ -85,11 +90,41 @@ body {
 }
 
 .listed-contributor {
-    margin-top:10px;
-    padding-bottom:25px;
-    border-bottom:1px solid #e89625;
+    border-top:1px solid #e89625;
 }
 
-    
+.listed-contributor-email {
+    padding-top:15px;
+    padding-bottom:15px;
+    height:75px;
+}
+
+.listed-contributor-items {
+    font-size:32px;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+.listed-contributor-active {
+    font-size:14px;
+    padding-top:25px;
+}
+
+.listed-contributor-email button {
+    display:none;
+    margin-top:4px;
+}
+
+.listed-contributor:hover small {
+    display:none;
+}
+
+.listed-contributor small {
+    display:block;
+}
+
+.listed-contributor:hover button {
+    display:block;
+}
 
 /* Dashboard end */
