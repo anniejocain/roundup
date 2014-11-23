@@ -32,7 +32,9 @@
 
 <script>
 	var org_slug = '{{org_slug}}';
-	var settings = {'url': '/api/item/search/?q=' + org_slug + '&format=json'};
+	var settings = {'url': '/api/item/search/?q=' + org_slug + '&format=json',
+		'gallery_create_url': '{% url 'common_get_gallery' %}',
+		'gallery_url': '{% url 'common_get_gallery' %}' + '?gallery_id='};
 </script>
 <script src="{{ STATIC_PREFIX }}js/add.js"></script>
 

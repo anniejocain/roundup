@@ -7,13 +7,13 @@ $(document).ready(function() {
     // Check our status service to see if we have archiving jobs pending
 	var request = $.ajax({
 	    type: "POST",
-		url: 'http://localhost:8000/service/gallery/',
+		url: settings.gallery_create_url,
 		data: { target_url: $("#id_link").val()},
 		cache: false
 	});
 
     request.done(function( msg ) {
-      gallery_id = msg.gallery_id;
+      gallery_id = String(msg.gallery_id);
       setInterval(check_status, 1000);
     });
 
@@ -45,7 +45,7 @@ function check_status() {
 
     // Check our status service to see if we have any new images in our gallery
 	var request = $.ajax({
-		url: 'http://localhost:8000/service/gallery/?gallery_id=' + gallery_id,
+		url: settings.gallery_url + gallery_id,
 		type: "GET",
 		dataType: "json",
 		cache: false
