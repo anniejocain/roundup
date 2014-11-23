@@ -1,4 +1,4 @@
-roundup_web/roundup/settings.py
-roundup_web/media
+signalback/settings.py
+srv/media
 *.pyc
 celerybeat-schedule.db
