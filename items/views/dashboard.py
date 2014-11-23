@@ -1,5 +1,5 @@
 import logging
-from roundup.models import Organization, BookmarkletKey, Item
+from items.models import Organization, BookmarkletKey, Item
 
 from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext

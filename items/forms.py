@@ -1,4 +1,4 @@
-from roundup.models import Organization, BookmarkletKey, Item
+from items.models import Organization, BookmarkletKey, Item
 
 from django import forms
 from django.contrib.auth.models import User

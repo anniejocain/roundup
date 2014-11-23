@@ -1,8 +1,8 @@
-from roundup.models import Item, BookmarkletKey, Organization, ImageGallery, ItemImage
-from roundup.forms import (
+from items.models import Item, BookmarkletKey, Organization, ImageGallery, ItemImage
+from items.forms import (
     AddItemForm,
 )
-from roundup.tasks import get_twitter_card_image, get_screen_capture
+from items.tasks import get_twitter_card_image, get_screen_capture
 
 import logging, json
 import requests

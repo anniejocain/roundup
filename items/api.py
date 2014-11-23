@@ -1,4 +1,4 @@
-from roundup.models import Item
+from items.models import Item
 
 from django.conf.urls import url
 
