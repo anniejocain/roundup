@@ -1,2 +1,2 @@
-web: gunicorn roundup.wsgi --log-file -
+web: gunicorn roundup_web.wsgi --log-file -
 worker: celery -A roundup worker --loglevel=info -B

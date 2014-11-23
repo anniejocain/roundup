@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from roundup.models import ItemImage, ImageGallery
+from items.models import ItemImage, ImageGallery
 
 from django.core.files import File
 from django.core.files.base import ContentFile
