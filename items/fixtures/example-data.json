@@ -1,7 +1,7 @@
 [
 {
     "pk": "4a896364-b261-4237-bd99-ed7c12856e61", 
-    "model": "roundup.bookmarkletkey", 
+    "model": "items.bookmarkletkey", 
     "fields": {
         "organization": 1, 
         "is_active": true
@@ -9,7 +9,7 @@
 },
 {
     "pk": 1, 
-    "model": "roundup.item", 
+    "model": "items.item", 
     "fields": {
         "bookmarklet_key": "4a896364-b261-4237-bd99-ed7c12856e61", 
         "contributor": "Example Contributor", 
@@ -38,7 +38,7 @@
 },
 {
     "pk": 1, 
-    "model": "roundup.organization", 
+    "model": "items.organization", 
     "fields": {
         "public_link": "http://example.com", 
         "slug": "test-org", 

@@ -9,14 +9,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Item.description'
-        db.add_column(u'roundup_item', 'description',
+        db.add_column(u'items_item', 'description',
                       self.gf('django.db.models.fields.CharField')(max_length=140, null=True, blank=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
         # Deleting field 'Item.description'
-        db.delete_column(u'roundup_item', 'description')
+        db.delete_column(u'items_item', 'description')
 
 
     models = {
@@ -56,15 +56,15 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'roundup.bookmarkletkey': {
+        u'items.bookmarkletkey': {
             'Meta': {'object_name': 'BookmarkletKey'},
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '255', 'primary_key': 'True'}),
-            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.Organization']"})
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.Organization']"})
         },
-        u'roundup.item': {
+        u'items.item': {
             'Meta': {'object_name': 'Item'},
-            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.BookmarkletKey']"}),
+            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.BookmarkletKey']"}),
             'contributed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'contributor': ('django.db.models.fields.CharField', [], {'max_length': '400', 'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
@@ -72,7 +72,7 @@ class Migration(SchemaMigration):
             'link': ('django.db.models.fields.URLField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '400'})
         },
-        u'roundup.organization': {
+        u'items.organization': {
             'Meta': {'object_name': 'Organization'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
@@ -83,4 +83,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['roundup']
+    complete_apps = ['items']

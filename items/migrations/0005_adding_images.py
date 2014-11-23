@@ -9,28 +9,28 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'ImageGallery'
-        db.create_table(u'roundup_imagegallery', (
+        db.create_table(u'items_imagegallery', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
-        db.send_create_signal(u'roundup', ['ImageGallery'])
+        db.send_create_signal(u'items', ['ImageGallery'])
 
         # Adding model 'ItemImage'
-        db.create_table(u'roundup_itemimage', (
+        db.create_table(u'items_itemimage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['roundup.Item'], null=True, blank=True)),
-            ('image_gallery', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['roundup.ImageGallery'], null=True, blank=True)),
+            ('item', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Item'], null=True, blank=True)),
+            ('image_gallery', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.ImageGallery'], null=True, blank=True)),
             ('item_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
         ))
-        db.send_create_signal(u'roundup', ['ItemImage'])
+        db.send_create_signal(u'items', ['ItemImage'])
 
 
     def backwards(self, orm):
         # Deleting model 'ImageGallery'
-        db.delete_table(u'roundup_imagegallery')
+        db.delete_table(u'items_imagegallery')
 
         # Deleting model 'ItemImage'
-        db.delete_table(u'roundup_itemimage')
+        db.delete_table(u'items_itemimage')
 
 
     models = {
@@ -70,21 +70,21 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'roundup.bookmarkletkey': {
+        u'items.bookmarkletkey': {
             'Meta': {'object_name': 'BookmarkletKey'},
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '254', 'null': 'True', 'blank': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '255', 'primary_key': 'True'}),
-            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.Organization']"})
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.Organization']"})
         },
-        u'roundup.imagegallery': {
+        u'items.imagegallery': {
             'Meta': {'object_name': 'ImageGallery'},
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
-        u'roundup.item': {
+        u'items.item': {
             'Meta': {'object_name': 'Item'},
-            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.BookmarkletKey']"}),
+            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.BookmarkletKey']"}),
             'contributed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'contributor': ('django.db.models.fields.CharField', [], {'max_length': '400', 'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '117', 'null': 'True', 'blank': 'True'}),
@@ -92,14 +92,14 @@ class Migration(SchemaMigration):
             'link': ('django.db.models.fields.URLField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '400'})
         },
-        u'roundup.itemimage': {
+        u'items.itemimage': {
             'Meta': {'object_name': 'ItemImage'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'image_gallery': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.ImageGallery']", 'null': 'True', 'blank': 'True'}),
-            'item': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.Item']", 'null': 'True', 'blank': 'True'}),
+            'image_gallery': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.ImageGallery']", 'null': 'True', 'blank': 'True'}),
+            'item': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.Item']", 'null': 'True', 'blank': 'True'}),
             'item_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'})
         },
-        u'roundup.organization': {
+        u'items.organization': {
             'Meta': {'object_name': 'Organization'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
@@ -110,4 +110,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['roundup']
+    complete_apps = ['items']

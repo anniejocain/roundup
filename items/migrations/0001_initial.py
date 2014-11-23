@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'Organization'
-        db.create_table(u'roundup_organization', (
+        db.create_table(u'items_organization', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=400)),
@@ -17,37 +17,37 @@ class Migration(SchemaMigration):
             ('public_link', self.gf('django.db.models.fields.URLField')(max_length=2000, null=True, blank=True)),
             ('public_email', self.gf('django.db.models.fields.EmailField')(max_length=254, null=True, blank=True)),
         ))
-        db.send_create_signal(u'roundup', ['Organization'])
+        db.send_create_signal(u'items', ['Organization'])
 
         # Adding model 'BookmarkletKey'
-        db.create_table(u'roundup_bookmarkletkey', (
-            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['roundup.Organization'])),
+        db.create_table(u'items_bookmarkletkey', (
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.Organization'])),
             ('key', self.gf('django.db.models.fields.CharField')(max_length=255, primary_key=True)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
-        db.send_create_signal(u'roundup', ['BookmarkletKey'])
+        db.send_create_signal(u'items', ['BookmarkletKey'])
 
         # Adding model 'Item'
-        db.create_table(u'roundup_item', (
+        db.create_table(u'items_item', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('bookmarklet_key', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['roundup.BookmarkletKey'])),
+            ('bookmarklet_key', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['items.BookmarkletKey'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=400)),
             ('link', self.gf('django.db.models.fields.URLField')(max_length=2000, null=True, blank=True)),
             ('contributor', self.gf('django.db.models.fields.CharField')(max_length=400, null=True, blank=True)),
             ('contributed_date', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
         ))
-        db.send_create_signal(u'roundup', ['Item'])
+        db.send_create_signal(u'items', ['Item'])
 
 
     def backwards(self, orm):
         # Deleting model 'Organization'
-        db.delete_table(u'roundup_organization')
+        db.delete_table(u'items_organization')
 
         # Deleting model 'BookmarkletKey'
-        db.delete_table(u'roundup_bookmarkletkey')
+        db.delete_table(u'items_bookmarkletkey')
 
         # Deleting model 'Item'
-        db.delete_table(u'roundup_item')
+        db.delete_table(u'items_item')
 
 
     models = {
@@ -87,22 +87,22 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'roundup.bookmarkletkey': {
+        u'items.bookmarkletkey': {
             'Meta': {'object_name': 'BookmarkletKey'},
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '255', 'primary_key': 'True'}),
-            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.Organization']"})
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.Organization']"})
         },
-        u'roundup.item': {
+        u'items.item': {
             'Meta': {'object_name': 'Item'},
-            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['roundup.BookmarkletKey']"}),
+            'bookmarklet_key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['items.BookmarkletKey']"}),
             'contributed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'contributor': ('django.db.models.fields.CharField', [], {'max_length': '400', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'link': ('django.db.models.fields.URLField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '400'})
         },
-        u'roundup.organization': {
+        u'items.organization': {
             'Meta': {'object_name': 'Organization'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '400'}),
@@ -113,4 +113,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['roundup']
+    complete_apps = ['items']
