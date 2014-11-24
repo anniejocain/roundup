@@ -7,7 +7,7 @@ from items.tasks import get_twitter_card_image, get_screen_capture
 import logging, json
 import requests
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
