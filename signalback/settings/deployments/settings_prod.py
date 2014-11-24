@@ -1,4 +1,6 @@
 from settings_common import *
+import dj_database_url
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -8,6 +10,9 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS += (
     'storages',
 )
+
+
+DATABASES['default'] = dj_database_url.config()
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_S3_SECURE_URLS = False       # use http instead of https
