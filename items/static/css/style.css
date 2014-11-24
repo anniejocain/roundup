@@ -18,6 +18,10 @@ body {
     font-size:18px;
 }
 
+.navbar-default .navbar-nav > li > a {
+    font-size:14px;
+}
+
 .btn, .form-control {
     border-radius:2px;
 }
@@ -92,6 +96,7 @@ body {
 
 .listed-contributor {
     border-top:1px solid #e89625;
+    background-color:#fffff7;
 }
 
 .listed-contributor-email {

@@ -44,8 +44,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         {% if request.user.is_authenticated %}
-            <li><a href="{% url 'auth_logout' %}" style="color: #aaa;">Log out</a></li>
             <li><a href="{% url 'dashboard_landing' %}" id="nav-button">Dashboard</a></li>
+            <li><a href="{% url 'auth_logout' %}" style="color: #aaa;">Log out</a></li>
 		{% else %}
 		    <li><a href="{% url 'auth_login' %}">Log in</a></li>
 		{% endif %}
