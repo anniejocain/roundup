@@ -65,6 +65,7 @@ body {
 .dashboard-invite-new {
     position:relative;
     top:-5px;
+    text-transform:none;
 }
 
 .contributors-list {
@@ -72,7 +73,7 @@ body {
     margin-bottom:25px;
 }
 
-.count-label {
+.count-label, .listed-contributor-items span {
     font-family: $sans-font;
     font-size:14px;
     margin-bottom:0px;
@@ -101,13 +102,19 @@ body {
 
 .listed-contributor-items {
     font-size:32px;
-    padding-top:15px;
+    padding-top:10px;
     padding-bottom:15px;
+} 
+
+.listed-contributor-items span {
+    margin-left: 5px;
+    display:inline-block;
 }
 
 .listed-contributor-active {
     font-size:14px;
-    padding-top:25px;
+    padding-top:30px;
+    color:#888;
 }
 
 .listed-contributor-email button {

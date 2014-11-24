@@ -7,7 +7,7 @@
 {% block content %}
 
     <div class="container">
-        <h1>{{organization}} Dashboard <small class="dashboard-invite-new"><a href="{% url 'dashboard_generate_key' %}" role="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Send invite</a></small></h1>
+        <h1>{{organization}} Dashboard <small class="dashboard-invite-new"><a href="{% url 'dashboard_generate_key' %}" role="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Send invite</a></small></h1>
         <div class="row dashboard-row">
             <div class="col-sm-3">
                 <p class="count-number">{{ items }}</p>
@@ -26,9 +26,9 @@
 	                {% csrf_token %}
 	                <input type="hidden" name="bookmarklet_key_id" value="{{contributor.key}}">
                 <div class="listed-contributor row">
-                    <div class="listed-contributor-email col-sm-6">{{ contributor.email }}{% if not contributor.is_active %}<br><small class="text-danger">deactivated</small><button type="submit" class="btn btn-success btn-xs">reactivate</button>{% else %}<button type="submit" class="btn btn-deactivate btn-xs">deactivate</button>{% endif %}</div>
-                    <div class="listed-contributor-items col-sm-2">{{contributor.items}}</div>
-                    <div class="col-sm-3 listed-contributor-active">last active {{contributor.last_contribution|date:'N j, Y'}}</div>
+                    <div class="listed-contributor-email col-sm-6">{{ contributor.email }}{% if not contributor.is_active %}<small class="text-danger">deactivated</small><button type="submit" class="btn btn-success btn-xs">reactivate</button>{% else %}<button type="submit" class="btn btn-deactivate btn-xs">deactivate</button>{% endif %}</div>
+                    <div class="listed-contributor-items col-sm-3">{{contributor.items}}<span>items</span></div>
+                    <div class="col-sm-3 listed-contributor-active">{% if contributor.last_contribution %}last active {{contributor.last_contribution|date:'N j, Y'}}{% else %}no contributions{% endif %}</div>
                 </div>
                 </form>
                 {% endfor %}
