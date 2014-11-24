@@ -52,7 +52,12 @@ def _get_gallery_images(image_gallery_id, target_url):
 def add_item(request):
 
     bookmarklet_key_id = request.GET.get('bookmarklet_key', '')
-    bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
+    try:
+        bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
+    except BookmarkletKey.DoesNotExist:
+        return render_to_response('bookmarklet_denied.html')
+    if not bookmarklet_key.is_active:
+        return render_to_response('bookmarklet_denied.html')
     organization = bookmarklet_key.organization
     title = request.GET.get('title', '')
     link = request.GET.get('link', '')
