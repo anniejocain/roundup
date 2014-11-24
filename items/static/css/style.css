@@ -140,3 +140,9 @@ body {
 }
 
 /* Dashboard end */
+
+.bookmarklet-denied {
+    font-size:224px;
+    color:#fffeb3;
+    text-align:center;
+}

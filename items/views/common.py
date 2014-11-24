@@ -65,6 +65,9 @@ def add_item(request):
     contributor = bookmarklet_key.display_name
     
     if request.method == 'POST':
+        if not bookmarklet_key.is_active:
+            return render_to_response('bookmarklet_denied.html')
+            
         add_form = AddItemForm(request.POST,)
         
         if add_form.is_valid():
@@ -98,7 +101,7 @@ def install_bookmarklet(request, bookmarklet_key_id):
     try:
         bookmarklet_key = BookmarkletKey.objects.get(key=bookmarklet_key_id)
     except BookmarkletKey.DoesNotExist:
-        raise Http404
+        return render_to_response('bookmarklet_denied.html')
         
     organization = bookmarklet_key.organization
     bookmarklet_domain = Site.objects.get_current().domain
