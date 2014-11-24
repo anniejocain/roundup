@@ -4,6 +4,7 @@
     "model": "items.bookmarkletkey", 
     "fields": {
         "organization": 1, 
+        "email": "contributor@example.com",
         "is_active": true
     }
 },
