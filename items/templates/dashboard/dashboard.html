@@ -28,6 +28,7 @@
                 <div class="listed-contributor row">
                     <div class="listed-contributor-email col-sm-6">{{ contributor.email }}{% if not contributor.is_active %}<br><small class="text-danger">deactivated</small><button type="submit" class="btn btn-success btn-xs">reactivate</button>{% else %}<button type="submit" class="btn btn-deactivate btn-xs">deactivate</button>{% endif %}</div>
                     <div class="listed-contributor-items col-sm-2">{{contributor.items}}</div>
+                    <div class="col-sm-3 listed-contributor-active">last active {{contributor.last_contribution|date:'N j, Y'}}</div>
                 </div>
                 </form>
                 {% endfor %}

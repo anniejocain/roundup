@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
 from django.core.mail import send_mail
-from django.db.models import Count
+from django.db.models import Count, Max
 from django.contrib.sites.models import Site
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -20,7 +20,7 @@ def landing(request):
     """The dashboard landing page"""
 
     org = Organization.objects.get(user=request.user)
-    contributors = BookmarkletKey.objects.all().filter(organization=org).annotate(items=Count('item',distinct=True)).order_by('email')
+    contributors = BookmarkletKey.objects.all().filter(organization=org).annotate(items=Count('item',distinct=True), last_contribution=Max('item__contributed_date')).order_by('email')
     items = Item.objects.all().filter(bookmarklet_key__organization=org).count()
     contributors_count = contributors.count()
 
