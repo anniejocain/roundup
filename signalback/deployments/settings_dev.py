@@ -6,6 +6,15 @@ TEMPLATE_DEBUG = DEBUG
 # Print email to console. Handy in a dev env.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    'static',
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+)
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
