@@ -1,6 +1,5 @@
-signalback/settings.py
 srv/media
 srv/static
 *.pyc
 celerybeat-schedule.db
-signalback/settings/settings.py
+signalback/local_settings.py

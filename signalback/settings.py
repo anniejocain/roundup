@@ -1,3 +1,7 @@
+# Our settings.py file is nothing more than an
+# import for our local settings we don't want
+# git to track.
+
 try:
     from .local_settings import *
 except ImportError, e:
