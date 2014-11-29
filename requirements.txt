@@ -26,3 +26,4 @@ psycopg2==2.5.3
 static3==0.5.1
 wsgiref==0.1.2
 django-storages==1.1.8
+boto==2.34.0
