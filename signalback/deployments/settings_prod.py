@@ -36,8 +36,8 @@ AWS_S3_SECURE_URLS = False       # use http instead of https
 AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
 
 # Let's look to the heroku confiv vars (env vars) for the rest of our prod settings
-AWS_S3_ACCESS_KEY_ID = 'AWS_S3_ACCESS_KEY_ID' in os.environ # enter your access key id
-AWS_S3_SECRET_ACCESS_KEY = 'AWS_S3_SECRET_ACCESS_KEY' in os.environ # AWS_S3_SECRET_ACCESS_KEY = '' # enter your secret access key
+AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID' in os.environ # enter your access key id
+AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY' in os.environ # AWS_S3_SECRET_ACCESS_KEY = '' # enter your secret access key
 AWS_STORAGE_BUCKET_NAME = 'AWS_STORAGE_BUCKET_NAME' in os.environ # AWS_STORAGE_BUCKET_NAME = ''
 
 SECRET_KEY = 'SECRET_KEY' in os.environ
