@@ -1,3 +1,4 @@
+import os
 from settings_common import *
 import dj_database_url
 
@@ -34,7 +35,9 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_S3_SECURE_URLS = False       # use http instead of https
 AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
 
-# you should set these as config var in heroku, or in a local_settings file
-# AWS_S3_ACCESS_KEY_ID = ''     # enter your access key id
-# AWS_S3_SECRET_ACCESS_KEY = '' # enter your secret access key
-# AWS_STORAGE_BUCKET_NAME = ''
+# Let's look to the heroku confiv vars (env vars) for the rest of our prod settings
+AWS_S3_ACCESS_KEY_ID = 'AWS_S3_ACCESS_KEY_ID' in os.environ # enter your access key id
+AWS_S3_SECRET_ACCESS_KEY = 'AWS_S3_SECRET_ACCESS_KEY' in os.environ # AWS_S3_SECRET_ACCESS_KEY = '' # enter your secret access key
+AWS_STORAGE_BUCKET_NAME = 'AWS_STORAGE_BUCKET_NAME' in os.environ # AWS_STORAGE_BUCKET_NAME = ''
+
+SECRET_KEY = 'SECRET_KEY' in os.environ
