@@ -1,2 +1,0 @@
-web: gunicorn signalback.wsgi --settings 'signalback.settings.deployments.settings_prod' --log-file -
-worker: celery -A items worker --loglevel=info -B
