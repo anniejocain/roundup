@@ -12,7 +12,7 @@ def push_to_heroku():
     
     # Create a new, disposable branch
     branch_name = 'heroku-build-%s' % random.randint(1, 1000)
-    local('git checkout -b%s' % branch_name)
+    local('git checkout -b %s' % branch_name)
     
     # Append our sensetive settings, out of 
     with open("signalback/settings.py", "a") as myfile:
