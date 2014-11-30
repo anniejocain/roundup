@@ -1,6 +1,6 @@
 from fabric.api import local
 import random
-from signalback.local_settings import SECRET_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME, HEROKU
+from signalback.local_settings import SECRET_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME
 
 
 def push_to_heroku():
