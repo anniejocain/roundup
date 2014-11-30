@@ -19,7 +19,7 @@
                 {% if next %}
                     <form method="post" action="?next={{ next }}" role="form">
                 {% else %}
-                    <form method="post" action="." role="form">
+                    <form method="post" action="{% url 'auth_login' %}" role="form">
                 {% endif %}
                 {% csrf_token %}
 
