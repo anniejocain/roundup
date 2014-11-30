@@ -11,8 +11,9 @@ def push_to_heroku():
     """
     
     # Create a new, disposable branch
-    branch_name = 'heroku-build-%s' % random.randint(1, 1000)
-    local('git checkout -b %s' % branch_name)
+    heroku_branch_name = 'heroku-build-%s' % random.randint(1, 1000)
+    current_branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
+    local('git checkout -b %s' % heroku_branch_name)
     
     # Append our sensetive settings, out of 
     with open("signalback/settings.py", "a") as myfile:
@@ -26,8 +27,8 @@ def push_to_heroku():
         
     # Toss our temp settings in git and push to heroku
     local("git commit -a -m 'heroku build'")
-    local("git push heroku %s:master --force" % branch_name)
-    local("git checkout develop")
-    local("git branch -D %s" % branch_name)
+    local("git push heroku %s:master --force" % heroku_branch_name)
+    local("git checkout %s" % current_branch)
+    local("git branch -D %s" % heroku_branch_name)
     
-    print "Pushed temp branch, %s, to Heroku" % branch_name
+    print "Pushed temp branch, %s, to Heroku" % heroku_branch_name

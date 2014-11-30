@@ -1,4 +1,3 @@
-signalback/settings.py
 srv/media
 srv/static
 *.pyc
