@@ -13,16 +13,13 @@
                 <form method="post" action="">
                     {% csrf_token %}
                     {{ add_form|as_bootstrap }}
+		            <div id="gallery-container"></div>
                     <div class="form-actions">
                         <input type="submit" value="Add" class="btn btn-primary btn-lg" />
                     </div>
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8" id="gallery_container">
-			</div>
-		</div>
     </div><!-- /.container -->
 
 
@@ -40,9 +37,7 @@
 
 <script id="image-template" type="text/x-handlebars-template">
 {% verbatim %}
-	{{#each item}}
-		<img src="{{path}}" width="200">
-	{{/each}}	
+	<img src="{{path}}">
 </script>
 {% endverbatim %}
 

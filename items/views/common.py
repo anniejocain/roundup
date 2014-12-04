@@ -35,7 +35,7 @@ def _get_gallery_images(image_gallery_id, target_url):
     """
     
     # Get our markup
-    markup = requests.get(target_url).text
+    markup = requests.get(target_url, verify=False).text
     
     # Get twitter image
     get_twitter_card_image.delay(image_gallery_id, target_url, markup)
@@ -136,6 +136,6 @@ def get_gallery(request):
     
     image_list = []
     for g_i in gallery_images:
-        image_list.append({"path": g_i.item_image.url})
+        image_list.append({"path": g_i.item_image.url, "id": g_i.id})
     
     return HttpResponse(json.dumps(image_list), mimetype='application/json')

@@ -21,9 +21,8 @@ Fabric==1.10.0
 # Prod/heroku stuff 
 dj-database-url==0.3.0
 dj-static==0.0.6
-django-toolbelt==0.0.1
+#django-toolbelt==0.0.1 # you might want this if you're going to deploy to Heroku
 gunicorn==19.0.0
-psycopg2==2.5.3
 static3==0.5.1
 wsgiref==0.1.2
 django-storages==1.1.8

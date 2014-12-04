@@ -10,7 +10,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # You probably want to set some of this in your local settings
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'sb',                      # Or path to database file if using sqlite3.
         'USER': 'sb',                      # Not used with sqlite3.
         'PASSWORD': 'sb',                  # Not used with sqlite3.

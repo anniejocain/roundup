@@ -141,6 +141,23 @@ body {
 
 /* Dashboard end */
 
+/* Add item start */
+#gallery-container {
+    height: 250px;
+    padding: 10px 0;
+}
+
+#gallery-container img {
+    max-height: 200px;
+    margin-right:20px;
+}
+
+#gallery-container>img:first-of-type {
+    border-bottom: 8px solid #42b4ff;
+}
+
+/* Add item end */
+
 .bookmarklet-denied {
     font-size:224px;
     color:#fffeb3;

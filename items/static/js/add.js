@@ -1,4 +1,6 @@
 var gallery_id;
+var displayed_image_ids = [];
+var gallery_polls = 0;
 
 $(document).ready(function() {
     setMaxLength();
@@ -14,7 +16,7 @@ $(document).ready(function() {
 
     request.done(function( msg ) {
       gallery_id = String(msg.gallery_id);
-      setInterval(check_status, 1000);
+      check_status();
     });
 
     request.fail(function( jqXHR, textStatus ) {
@@ -41,8 +43,6 @@ function checkMaxLength(strID){
 }
 
 function check_status() {
-
-
     // Check our status service to see if we have any new images in our gallery
 	var request = $.ajax({
 		url: settings.gallery_url + gallery_id,
@@ -51,10 +51,25 @@ function check_status() {
 		cache: false
 	});
 
-	request.done(function(data) {
-	    var source = $("#image-template").html();
-    	var template = Handlebars.compile(source);
-        $('#gallery_container').html(template({'item': data}));
+	request.done(function(data) {            
+        $.each(data, function(index, value) {
+            console.log(value.id);
+            if ($.inArray(value.id, displayed_image_ids) == -1) {
+                console.log('hassdvcsd');
+                // TODO: we shouldn't be compiling this template every time
+                var source = $("#image-template").html();
+                var template = Handlebars.compile(source);
+                $('#gallery-container').append(template({'path': value.path}));
+
+                displayed_image_ids.push(value.id);
+            }
+        });
+        
+        // Let's poll for 20 seconds.
+        gallery_polls += 1;
+        if (gallery_polls < 40) {
+            window.setTimeout(check_status, 1000);
+        }
 	});
 }
 

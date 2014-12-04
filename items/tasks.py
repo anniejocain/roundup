@@ -41,7 +41,7 @@ def get_twitter_card_image(image_gallery_id, target_url, markup):
         filename = parsed_url.path.split('/')[-1]
         
         # Add the image to our datastore and update the gallery
-        image_content = ContentFile(requests.get(twitter_image).content)
+        image_content = ContentFile(requests.get(twitter_image, verify=False).content)
         image_gallery = ImageGallery.objects.get(id=image_gallery_id)
         item_image = ItemImage(image_gallery=image_gallery)
         item_image.item_image.save(filename, image_content)
@@ -55,19 +55,18 @@ def get_screen_capture(image_gallery_id, target_url, markup):
     preview service. Then, it'll save it to our media store
     and update our gallery model.
     """
-    preview_url = 'http://hlslwebtest.law.harvard.edu/preview/create?url=%s' % urllib.quote(target_url)
-
-    response = requests.get(preview_url).text
+    preview_url = 'http://hlslwebtest.law.harvard.edu/preview/create?thumb=400px*300px&url=%s' % urllib.quote(target_url)
+    response = requests.get(preview_url, verify=False).text
     serialized_response = json.loads(response)
 
-    preview_url_image = 'http://hlslwebtest.law.harvard.edu%s' % serialized_response['image_url']
+    preview_url_image = 'http://hlslwebtest.law.harvard.edu%s' % serialized_response['thumb_url']
 
     # Get our filename. Isn't there a better way to do this?
     parsed_url = urlparse(preview_url_image)
     filename = parsed_url.path.split('/')[-1]
 
     # Add the image to our datastore and update the gallery
-    image_content = ContentFile(requests.get(preview_url_image).content)
+    image_content = ContentFile(requests.get(preview_url_image, verify=False).content)
     image_gallery = ImageGallery.objects.get(id=image_gallery_id)
     item_image = ItemImage(image_gallery=image_gallery)
     item_image.item_image.save(filename, image_content)
