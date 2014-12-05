@@ -29,11 +29,14 @@
 	{% verbatim %}
 		{{#each item}}
 			<div class="row single-item-container">
-				<div class="col-xs-12">	
+				<div class="col-xs-8">	
 					<p><a href="{{link}}" target="_blank">{{title}}</a></p>
 					<p>{{description}}</p>
 					<p>{{contributor}}</p>
 					<p>{{contributed_date}}</p>
+				</div>
+				<div class="col-xs-4">
+					<img src="{{thumbnail}}" width=300>
 				</div>
 			</div>
 		{{/each}}	

@@ -13,7 +13,12 @@
                 <form method="post" action="">
                     {% csrf_token %}
                     {{ add_form|as_bootstrap }}
-		            <div id="gallery-container"></div>
+					<input class="" id="image-rep" name="image-rep" value="" type="hidden" />					
+		            <div id="gallery-container">
+		            	<div id="image-placeholder">
+							<img src="{{ STATIC_PREFIX }}img/spinner.gif">
+						</div>
+		            </div>
                     <div class="form-actions">
                         <input type="submit" value="Add" class="btn btn-primary btn-lg" />
                     </div>

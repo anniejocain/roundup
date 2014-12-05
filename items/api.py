@@ -32,11 +32,19 @@ class ItemResource(ModelResource):
         
         object_list = []
         for o in objects:
+            
+            
+            thumbnail = ''
+            if o.itemimage_set.first():
+                thumbnail = o.itemimage_set.first().item_image.url
+            
             stripped_object = { 'title': o.title,
                                 'description': o.description,
                                 'link': o.link,
                                 'contributor': o.contributor,
-                                'contributed_date': o.contributed_date, }
+                                'contributed_date': o.contributed_date,
+                                'thumbnail': thumbnail,
+                                }
             object_list.append(stripped_object)
 
         return self.create_response(request, object_list)

@@ -150,10 +150,33 @@ body {
 #gallery-container img {
     max-height: 200px;
     margin-right:20px;
+    border: 1px solid #ddd;
+    cursor: pointer;
 }
 
-#gallery-container>img:first-of-type {
+#gallery-container .selected-image {
     border-bottom: 8px solid #42b4ff;
+    cursor: default;
+}
+
+#gallery-container .selectable-image {
+    border-bottom: 8px solid #ddd;
+}
+
+#gallery-container #image-placeholder {
+    height: 200px;
+    width: 200px;
+    border: solid #bbb 1px;
+}
+
+#gallery-container #image-placeholder p{
+    font-size: 13px;
+}
+
+#gallery-container #image-placeholder img{
+    margin: 80px 80px;
+    border: none;
+    cursor: default;
 }
 
 /* Add item end */

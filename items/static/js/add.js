@@ -10,7 +10,7 @@ $(document).ready(function() {
 	var request = $.ajax({
 	    type: "POST",
 		url: settings.gallery_create_url,
-		data: { target_url: $("#id_link").val()},
+		data: { target_url: $("#id_additem-link").val()},
 		cache: false
 	});
 
@@ -20,8 +20,13 @@ $(document).ready(function() {
     });
 
     request.fail(function( jqXHR, textStatus ) {
-      alert( "Request failed: " + textStatus );
     });
+    
+    
+    $(document).on('click', '.selectable-image', function() {
+        console.log('image selected');
+        $('.selected_image').attr('value', value.id);
+    })
     
 });
 
@@ -52,17 +57,30 @@ function check_status() {
 	});
 
 	request.done(function(data) {            
-        $.each(data, function(index, value) {
-            console.log(value.id);
+        $.each(data, function(index, value) {            
             if ($.inArray(value.id, displayed_image_ids) == -1) {
-                console.log('hassdvcsd');
+                
+                displayed_image_ids.push(value.id);
+        
+                if (displayed_image_ids.length !== 0) {
+                    $('#image-placeholder').hide();
+                }
+                
                 // TODO: we shouldn't be compiling this template every time
                 var source = $("#image-template").html();
                 var template = Handlebars.compile(source);
-                $('#gallery-container').append(template({'path': value.path}));
-
-                displayed_image_ids.push(value.id);
+                var new_image = $(template({'path': value.path})).hide().fadeIn();
+                
+                if (displayed_image_ids.length == 1) {
+                    new_image.addClass('selected-image');
+                    $('#image-rep').attr('value', value.id);
+                } else {
+                    new_image.addClass('selectable-image');
+                }
+                
+                $('#gallery-container').append(new_image);
             }
+            
         });
         
         // Let's poll for 20 seconds.

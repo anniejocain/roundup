@@ -68,7 +68,7 @@ def add_item(request):
         if not bookmarklet_key.is_active:
             return render_to_response('bookmarklet_denied.html')
             
-        add_form = AddItemForm(request.POST,)
+        add_form = AddItemForm(request.POST, prefix='additem')
         
         if add_form.is_valid():
             bookmarklet_key.display_name = add_form.cleaned_data['contributor']
@@ -76,6 +76,13 @@ def add_item(request):
             item = add_form.save(commit=False)
             item.bookmarklet_key = bookmarklet_key
             item.save()
+            
+            item_image_id = request.POST.get('image-rep', '')
+            
+            item_image = ItemImage.objects.get(id=item_image_id)
+            item_image.item=item
+            item_image.save()
+            
             
             return HttpResponseRedirect(reverse('dashboard_display_items', kwargs={'slug' : organization.slug}))   
         else:
@@ -88,8 +95,8 @@ def add_item(request):
                 'link':link,
                 'description':description,
                 'contributor':contributor}
-        add_form = AddItemForm(initial=form_data)
-    
+        add_form = AddItemForm(initial=form_data, prefix='additem')
+        
         context = {'add_form': add_form, 'organization': organization}           
         context = RequestContext(request, context)
     
