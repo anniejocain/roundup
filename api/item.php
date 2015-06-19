@@ -101,6 +101,27 @@ class Item extends Controller {
       //echo "<p>Tweeting $message</p>";
         
       $connection->post('statuses/update', array('status' => $message, 'wrap_links' => true));
+
+
+      // Post to slack
+      // Thanks, https://gist.github.com/alexstone/9319715
+      $slack_message = "<" . $link . "|" . $description . "> - " . $creator;
+      $channel = $f3->get('SLACK_CHANNEL');
+      $data = "payload=" . json_encode(array(
+              "channel"       =>  "#{$channel}",
+              "text"          =>  $slack_message
+          ));
+	
+      $slack_hook_url = $f3->get('SLACK_HOOK_URL');
+      $ch = curl_init($slack_hook_url);
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $result = curl_exec($ch);
+      curl_close($ch);
+      // end slack integration	
+
+
       
       error_log($link, 0);
         $ch = curl_init();
